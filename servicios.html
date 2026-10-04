@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nuestra Flota · Ride Bike</title>
+  <meta name="description" content="Catálogo completo de bicicletas: urbanas, mountain bike, ruta, eléctricas, infantiles y tándem." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#16a34a', 'primary-light': '#22c55e', 'background-dark': '#0a0a0a', 'background-card': '#141414' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="servicios" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main>
+    <section class="py-20 border-b border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-primary section-tag mb-3">Catálogo</p>
+        <h1 class="text-6xl md:text-7xl font-bold text-white brand-title">NUESTRA FLOTA</h1>
+        <p class="text-gray-300 text-lg mt-4 max-w-2xl mx-auto">Elige la bici perfecta para tu próxima rodada. Todas incluyen casco y candado.</p>
+      </div>
+    </section>
+
+    <section class="py-12 border-b border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap items-center justify-center gap-2" id="filterBar">
+          <button class="filter-btn active px-5 py-2 rounded-full text-sm font-medium bg-primary text-black uppercase tracking-wider" data-filter="todas">Todas</button>
+          <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-background-card border border-gray-700 text-gray-300 hover:border-primary uppercase tracking-wider" data-filter="ciudad">Ciudad</button>
+          <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-background-card border border-gray-700 text-gray-300 hover:border-primary uppercase tracking-wider" data-filter="aventura">Aventura</button>
+          <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-background-card border border-gray-700 text-gray-300 hover:border-primary uppercase tracking-wider" data-filter="deporte">Deporte</button>
+          <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-background-card border border-gray-700 text-gray-300 hover:border-primary uppercase tracking-wider" data-filter="premium">Premium</button>
+          <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-background-card border border-gray-700 text-gray-300 hover:border-primary uppercase tracking-wider" data-filter="familia">Familia</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="biciGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </div>
+    </section>
+
+    <section class="py-16 bg-background-card/40 border-t border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <p class="text-primary section-tag mb-3">Complementos</p>
+          <h2 class="text-5xl md:text-6xl font-bold text-white brand-title">ACCESORIOS EXTRA</h2>
+          <p class="text-gray-400 mt-3 max-w-xl mx-auto">Complementa tu arriendo con estos accesorios opcionales.</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="accesoriosGrid"></div>
+      </div>
+    </section>
+
+    <section class="py-20">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-gradient-to-r from-primary/20 via-primary/10 to-transparent border border-primary/30 rounded-2xl p-10 md:p-14 text-center">
+          <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 brand-title">¿Ya elegiste la tuya?</h2>
+          <p class="text-gray-300 mb-8 max-w-xl mx-auto">Reserva online en menos de 1 minuto y pasa a retirar tu bici cuando quieras.</p>
+          <a href="reserva.html" class="btn-primary text-lg">Reservar ahora</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const grid = document.getElementById('biciGrid');
+      const accGrid = document.getElementById('accesoriosGrid');
+      const filterBar = document.getElementById('filterBar');
+
+      function renderBicis(filter = 'todas') {
+        const list = filter === 'todas' ? BICICLETAS : BICICLETAS.filter(b => b.categoria === filter);
+        grid.innerHTML = list.map(b => `
+          <div class="card-hover bg-background-card border border-gray-800 rounded-xl overflow-hidden group" data-cat="${b.categoria}">
+            <div class="aspect-[4/3] overflow-hidden bg-background-dark relative">
+              <img src="${b.imagen}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="${b.nombre}"/>
+              <span class="absolute top-3 left-3 bg-background-dark/80 backdrop-blur text-primary border border-primary/40 text-[10px] font-bold px-3 py-1 rounded uppercase tracking-widest">${UI.categoriaLabel(b.categoria)}</span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-2xl font-bold text-white brand-title mb-2">${b.nombre}</h3>
+              <p class="text-gray-400 text-sm leading-relaxed mb-4">${b.descripcion}</p>
+              <div class="flex flex-wrap gap-1 mb-4">
+                ${b.incluye.map(i => `<span class="text-[10px] uppercase tracking-wider bg-primary/10 border border-primary/30 text-primary px-2 py-1 rounded">${i}</span>`).join('')}
+              </div>
+              <div class="flex items-center justify-between pt-4 border-t border-gray-800">
+                <div>
+                  <p class="text-xs text-gray-400 uppercase tracking-wider">Desde</p>
+                  <p class="text-primary font-bold text-2xl brand-title">S/ ${b.precioHora}<span class="text-xs text-gray-400">/hr</span></p>
+                </div>
+                <a href="reserva.html?servicio=${b.id}" class="btn-primary text-sm">Reservar</a>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderAccesorios() {
+        accGrid.innerHTML = ACCESORIOS.map(a => `
+          <div class="bg-background-card border border-gray-800 rounded-xl p-5 flex items-center gap-4 card-hover">
+            <div class="h-12 w-12 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center text-primary flex-shrink-0">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <div class="flex-1">
+              <h4 class="text-white font-semibold">${a.nombre}</h4>
+              <p class="text-gray-400 text-xs">${a.descripcion}</p>
+            </div>
+            <p class="text-primary font-bold brand-title text-xl">S/ ${a.precio}</p>
+          </div>
+        `).join('');
+      }
+
+      filterBar.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBar.querySelectorAll('.filter-btn').forEach(b => {
+            b.classList.remove('bg-primary', 'text-black');
+            b.classList.add('bg-background-card', 'border', 'border-gray-700', 'text-gray-300');
+          });
+          btn.classList.add('bg-primary', 'text-black');
+          btn.classList.remove('bg-background-card', 'border', 'border-gray-700', 'text-gray-300');
+          renderBicis(btn.dataset.filter);
+        });
+      });
+
+      renderBicis();
+      renderAccesorios();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Horarios · Ride Bike</title>
+  <meta name="description" content="Horarios de atención de Ride Bike en Miraflores, Lima." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#16a34a', 'primary-light': '#22c55e', 'background-dark': '#0a0a0a', 'background-card': '#141414' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="horarios" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main>
+    <section class="py-20 border-b border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-primary section-tag mb-3">Atención</p>
+        <h1 class="text-6xl md:text-7xl font-bold text-white brand-title">HORARIOS</h1>
+        <p class="text-gray-300 text-lg mt-4 max-w-2xl mx-auto">Estamos abiertos todos los días del año para que puedas rodar cuando quieras.</p>
+      </div>
+    </section>
+
+    <section class="py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <div class="bg-background-card border border-gray-800 rounded-2xl overflow-hidden">
+            <div class="bg-primary p-6 text-black text-center">
+              <h2 class="brand-title text-4xl">ATENCIÓN AL PÚBLICO</h2>
+              <p class="text-sm uppercase tracking-wider">Av. Larco 345, Miraflores</p>
+            </div>
+            <div class="divide-y divide-gray-800" id="horariosList"></div>
+          </div>
+
+          <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-background-card border border-primary/30 rounded-xl p-6">
+              <h3 class="text-primary font-bold mb-2 brand-title text-2xl">RESERVA ONLINE 24/7</h3>
+              <p class="text-gray-300 text-sm">Reserva en cualquier momento desde nuestra web. Las reservas online se procesan en menos de 5 minutos.</p>
+            </div>
+            <div class="bg-background-card border border-gray-800 rounded-xl p-6">
+              <h3 class="text-white font-bold mb-2 brand-title text-2xl">FESTIVOS</h3>
+              <p class="text-gray-300 text-sm">Mantenemos horario regular en feriados nacionales. Consultar horarios especiales por eventos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 bg-background-card/40 border-t border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+          <p class="text-primary section-tag mb-3">Planifica tu visita</p>
+          <h2 class="text-5xl md:text-6xl font-bold text-white brand-title">RESERVA TU BICI</h2>
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <a href="reserva.html" class="btn-primary text-base">Reservar ahora</a>
+          <a href="contacto.html" class="btn-outline text-base">¿Dudas? Escríbenos</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const days = [
+        { key: 'lunes', label: 'Lunes' },
+        { key: 'martes', label: 'Martes' },
+        { key: 'miercoles', label: 'Miércoles' },
+        { key: 'jueves', label: 'Jueves' },
+        { key: 'viernes', label: 'Viernes' },
+        { key: 'sabado', label: 'Sábado' },
+        { key: 'domingo', label: 'Domingo' }
+      ];
+      const todayIdx = (new Date().getDay() + 6) % 7;
+
+      const list = document.getElementById('horariosList');
+      list.innerHTML = days.map((d, i) => {
+        const h = HORARIOS[d.key];
+        const isToday = i === todayIdx;
+        const hours = h.abierto ? `${h.desde} - ${h.hasta}` : 'Cerrado';
+        const status = h.abierto ? 'bg-primary' : 'bg-red-500';
+        return `
+          <div class="flex items-center justify-between p-5 ${isToday ? 'bg-primary/10' : ''}">
+            <div class="flex items-center gap-3">
+              <span class="h-3 w-3 rounded-full ${status}"></span>
+              <div>
+                <p class="text-white font-semibold uppercase tracking-wider">${d.label}${isToday ? ' <span class="text-primary text-xs ml-1">HOY</span>' : ''}</p>
+                <p class="text-gray-400 text-xs">${h.abierto ? 'Abierto al público' : 'Sin atención'}</p>
+              </div>
+            </div>
+            <p class="text-primary font-bold brand-title text-2xl">${hours}</p>
+          </div>
+        `;
+      }).join('');
+    }
+  </script>
+</body>
+</html>

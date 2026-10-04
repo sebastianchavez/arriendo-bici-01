@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalle de reserva · Ride Bike</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#16a34a', 'primary-light': '#22c55e', 'background-dark': '#0a0a0a', 'background-card': '#141414' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="detalle" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="max-w-4xl mx-auto" id="contenido">
+      <div class="text-center py-20">
+        <p class="text-gray-400">Cargando reserva...</p>
+      </div>
+    </div>
+  </main>
+
+  <div id="modalAnular"></div>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      if (!UI.requireAuth('detalle-reserva.html')) return;
+
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      const reserva = id ? Reservas.get(id) : null;
+      const user = Auth.current();
+
+      if (!reserva || reserva.userId !== user.id) {
+        document.getElementById('contenido').innerHTML = `
+          <div class="text-center py-20">
+            <p class="text-gray-400 mb-4">Reserva no encontrada.</p>
+            <a href="perfil.html" class="btn-primary">Ver mis reservas</a>
+          </div>
+        `;
+        return;
+      }
+
+      const bici = UI.bicicletaById(reserva.bicicletaId);
+      const ruta = reserva.rutaId ? UI.rutaById(reserva.rutaId) : null;
+      const canCancel = !['anulada','completada'].includes(reserva.estado);
+      const eb = UI.estadoBadge(reserva.estado);
+      const pb = UI.pagoBadge(reserva.pago);
+
+      document.getElementById('contenido').innerHTML = `
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-8">
+          <div>
+            <a href="perfil.html" class="text-sm text-primary hover:underline flex items-center gap-1 mb-2">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+              Volver a mis reservas
+            </a>
+            <h1 class="brand-title text-5xl md:text-6xl text-white">RESERVA</h1>
+            <p class="text-gray-400 text-sm mt-1">Código: <span class="text-primary font-bold">RB-${reserva.id.toUpperCase().slice(-8)}</span></p>
+          </div>
+          <div class="flex gap-2">
+            <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs border ${eb.cls}">${eb.label}</span>
+            <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs border ${pb.cls}">${pb.label}</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-4">
+            <div class="bg-background-card border border-gray-800 rounded-2xl overflow-hidden">
+              <div class="aspect-[3/1] overflow-hidden">
+                <img src="${bici.imagen}" class="w-full h-full object-cover" alt="${bici.nombre}"/>
+              </div>
+              <div class="p-6">
+                <span class="text-[10px] uppercase tracking-widest text-primary/80">${UI.categoriaLabel(bici.categoria)}</span>
+                <h2 class="brand-title text-3xl text-white mt-1 mb-2">${bici.nombre}</h2>
+                <p class="text-gray-400 text-sm">${bici.descripcion}</p>
+                <div class="flex flex-wrap gap-2 mt-4">
+                  ${bici.incluye.map(i => `<span class="text-xs uppercase tracking-wider bg-primary/10 border border-primary/30 text-primary px-3 py-1 rounded">${i}</span>`).join('')}
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-background-card border border-gray-800 rounded-2xl p-6">
+              <h3 class="brand-title text-2xl text-white mb-4">DETALLE DE LA RESERVA</h3>
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <div>
+                  <p class="text-xs text-gray-400 uppercase tracking-wider">Fecha</p>
+                  <p class="text-white font-semibold mt-1">${UI.formatDateShort(reserva.fecha)}</p>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-400 uppercase tracking-wider">Hora</p>
+                  <p class="text-white font-semibold mt-1">${reserva.hora}</p>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-400 uppercase tracking-wider">Duración</p>
+                  <p class="text-white font-semibold mt-1">${reserva.horas} hr${reserva.horas>1?'s':''}</p>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-400 uppercase tracking-wider">Método de pago</p>
+                  <p class="text-white font-semibold mt-1 capitalize">${reserva.metodoPago || '—'}</p>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-400 uppercase tracking-wider">Cliente</p>
+                  <p class="text-white font-semibold mt-1">${user.nombre}</p>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-400 uppercase tracking-wider">Reservado el</p>
+                  <p class="text-white font-semibold mt-1">${UI.formatDateShort(new Date(reserva.createdAt).toISOString().split('T')[0])}</p>
+                </div>
+              </div>
+
+              ${ruta ? `
+              <div class="mt-6 pt-6 border-t border-gray-800">
+                <p class="text-xs text-primary uppercase tracking-wider mb-2">Ruta sugerida</p>
+                <div class="flex items-center gap-4 p-3 bg-background-dark rounded-xl">
+                  <img src="${ruta.imagen}" class="h-14 w-14 rounded-lg object-cover"/>
+                  <div class="flex-1">
+                    <p class="text-white font-semibold">${ruta.nombre}</p>
+                    <p class="text-gray-400 text-xs">${ruta.duracion}h · ${ruta.distancia} km · ${ruta.dificultad}</p>
+                  </div>
+                </div>
+              </div>` : ''}
+
+              ${reserva.accesorios.length ? `
+              <div class="mt-6 pt-6 border-t border-gray-800">
+                <p class="text-xs text-primary uppercase tracking-wider mb-2">Accesorios</p>
+                <div class="space-y-2">
+                  ${reserva.accesorios.map(ida => { const a = UI.accesorioById(ida); return `
+                    <div class="flex items-center justify-between p-3 bg-background-dark rounded-lg">
+                      <span class="text-white text-sm">${a.nombre}</span>
+                      <span class="text-primary font-bold brand-title">S/ ${a.precio}</span>
+                    </div>
+                  `; }).join('')}
+                </div>
+              </div>` : ''}
+            </div>
+          </div>
+
+          <aside class="lg:col-span-1 space-y-4">
+            <div class="bg-background-card border border-primary/30 rounded-2xl p-6">
+              <h3 class="brand-title text-2xl text-white mb-4">TOTAL</h3>
+              <div class="space-y-2 text-sm mb-4 pb-4 border-b border-gray-800">
+                <div class="flex justify-between"><span class="text-gray-400">Subtotal arriendo</span><span class="text-white">${UI.formatPrice(reserva.subtotal)}</span></div>
+                ${reserva.accesoriosTotal ? `<div class="flex justify-between"><span class="text-gray-400">Accesorios</span><span class="text-white">${UI.formatPrice(reserva.accesoriosTotal)}</span></div>` : ''}
+              </div>
+              <div class="flex justify-between items-baseline mb-6">
+                <span class="text-white font-bold uppercase tracking-wider">Total</span>
+                <span class="text-primary text-3xl font-bold brand-title">${UI.formatPrice(reserva.total)}</span>
+              </div>
+              ${canCancel ? `
+                <button id="btnAnular" class="w-full bg-red-500/10 border border-red-500/40 text-red-300 font-bold py-3 rounded-lg hover:bg-red-500/20 transition-colors uppercase tracking-wider">
+                  Anular reserva
+                </button>
+                <p class="text-xs text-gray-500 mt-2 text-center">Anular gratis hasta 24h antes.</p>
+              ` : `<div class="text-center text-gray-500 text-sm py-3 border border-gray-800 rounded-lg">Esta reserva no se puede anular.</div>`}
+            </div>
+
+            <div class="bg-background-card border border-gray-800 rounded-xl p-5">
+              <h4 class="text-white font-bold mb-2 brand-title text-xl">¿Necesitas ayuda?</h4>
+              <p class="text-gray-400 text-sm mb-3">Contacta con nuestro equipo si tienes algún problema.</p>
+              <a href="contacto.html" class="text-primary text-sm font-medium hover:underline">Contactar soporte →</a>
+            </div>
+          </aside>
+        </div>
+      `;
+
+      const btnAnular = document.getElementById('btnAnular');
+      if (btnAnular) {
+        btnAnular.addEventListener('click', () => {
+          const modal = document.createElement('div');
+          modal.className = 'modal-backdrop';
+          modal.innerHTML = `
+            <div class="modal-content">
+              <div class="text-center">
+                <div class="h-14 w-14 mx-auto rounded-full bg-red-500/20 border-2 border-red-500/40 flex items-center justify-center mb-4">
+                  <svg class="h-7 w-7 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <h3 class="brand-title text-3xl text-white mb-2">¿ANULAR RESERVA?</h3>
+                <p class="text-gray-400 text-sm mb-6">Esta acción no se puede deshacer. Si ya pagaste, recibirás el reembolso en 5-7 días hábiles.</p>
+                <div class="flex gap-3">
+                  <button id="cancelAnular" class="btn-outline flex-1">Cancelar</button>
+                  <button id="confirmAnular" class="flex-1 bg-red-500 text-white font-bold py-3 rounded-lg hover:bg-red-600 transition-colors uppercase tracking-wider">Sí, anular</button>
+                </div>
+              </div>
+            </div>
+          `;
+          document.body.appendChild(modal);
+          document.getElementById('cancelAnular').addEventListener('click', () => modal.remove());
+          document.getElementById('confirmAnular').addEventListener('click', () => {
+            Reservas.cancel(reserva.id);
+            UI.toast('Reserva anulada correctamente');
+            modal.remove();
+            setTimeout(() => window.location.reload(), 600);
+          });
+        });
+      }
+    }
+  </script>
+</body>
+</html>

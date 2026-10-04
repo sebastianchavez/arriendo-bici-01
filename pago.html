@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pago · Ride Bike</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#16a34a', 'primary-light': '#22c55e', 'background-dark': '#0a0a0a', 'background-card': '#141414' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="pago" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="text-center mb-10">
+      <p class="text-primary section-tag mb-2">Confirmar reserva</p>
+      <h1 class="brand-title text-5xl md:text-6xl text-white mb-3">PAGO</h1>
+      <p class="text-gray-400">Elige tu método de pago favorito</p>
+    </div>
+
+    <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <div class="bg-background-card border border-gray-800 rounded-2xl p-6 md:p-8">
+          <h2 class="brand-title text-3xl text-white mb-6">MÉTODO DE PAGO</h2>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+            <button type="button" data-method="tarjeta" class="payment-method-card border-2 border-gray-700 bg-background-dark rounded-xl p-4 text-center hover:border-primary transition-all">
+              <svg class="h-7 w-7 mx-auto text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+              <p class="text-xs text-gray-300 mt-2 uppercase tracking-wider font-medium">Tarjeta</p>
+            </button>
+            <button type="button" data-method="yape" class="payment-method-card border-2 border-gray-700 bg-background-dark rounded-xl p-4 text-center hover:border-primary transition-all">
+              <div class="h-7 w-7 mx-auto bg-purple-600 rounded-md flex items-center justify-center text-white font-bold text-xs">Y</div>
+              <p class="text-xs text-gray-300 mt-2 uppercase tracking-wider font-medium">Yape</p>
+            </button>
+            <button type="button" data-method="plin" class="payment-method-card border-2 border-gray-700 bg-background-dark rounded-xl p-4 text-center hover:border-primary transition-all">
+              <div class="h-7 w-7 mx-auto bg-cyan-500 rounded-md flex items-center justify-center text-white font-bold text-xs">P</div>
+              <p class="text-xs text-gray-300 mt-2 uppercase tracking-wider font-medium">Plin</p>
+            </button>
+            <button type="button" data-method="efectivo" class="payment-method-card border-2 border-gray-700 bg-background-dark rounded-xl p-4 text-center hover:border-primary transition-all">
+              <svg class="h-7 w-7 mx-auto text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+              <p class="text-xs text-gray-300 mt-2 uppercase tracking-wider font-medium">Efectivo</p>
+            </button>
+          </div>
+
+          <div id="methodDetail" class="bg-background-dark border border-gray-800 rounded-xl p-6"></div>
+
+          <button id="btnConfirmarPago" class="btn-primary w-full mt-6 text-base">
+            Confirmar pago
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          </button>
+          <p class="text-xs text-gray-500 text-center mt-3">Al confirmar aceptas nuestros <a href="terminos.html" class="text-primary hover:underline">términos y condiciones</a>.</p>
+        </div>
+      </div>
+
+      <aside class="lg:col-span-1">
+        <div class="bg-background-card border border-primary/30 rounded-2xl p-6 sticky top-28">
+          <h3 class="brand-title text-2xl text-white mb-4 flex items-center gap-2">
+            <svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+            Resumen
+          </h3>
+          <div id="resumenPago" class="space-y-3 text-sm"></div>
+          <div class="border-t border-gray-800 mt-4 pt-4 space-y-2">
+            <div class="flex justify-between text-sm"><span class="text-gray-400">Subtotal</span><span id="p-sub" class="text-white">S/ 0.00</span></div>
+            <div class="flex justify-between text-sm"><span class="text-gray-400">Extras</span><span id="p-acc" class="text-white">S/ 0.00</span></div>
+            <div class="border-t border-gray-800 pt-2 mt-2 flex justify-between items-baseline">
+              <span class="text-white font-bold uppercase tracking-wider">Total</span>
+              <span id="p-total" class="text-primary text-3xl font-bold brand-title">S/ 0.00</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      if (!UI.requireAuth('pago.html')) return;
+
+      const params = new URLSearchParams(window.location.search);
+      const reservaId = params.get('reserva') || Storage.get(STORAGE_KEYS.RESERVA_ACTUAL);
+      const reserva = reservaId ? Reservas.get(reservaId) : null;
+
+      if (!reserva) {
+        UI.toast('No hay reserva para pagar', 'error');
+        setTimeout(() => window.location.href = 'index.html', 800);
+        return;
+      }
+
+      const bici = UI.bicicletaById(reserva.bicicletaId);
+      document.getElementById('resumenPago').innerHTML = `
+        <div class="flex items-center gap-3 pb-3 border-b border-gray-800">
+          <img src="${bici.imagen}" class="h-12 w-12 rounded-lg object-cover"/>
+          <div>
+            <p class="text-white font-semibold text-sm brand-title">${bici.nombre}</p>
+            <p class="text-gray-400 text-xs">${UI.formatDateShort(reserva.fecha)} · ${reserva.hora}</p>
+          </div>
+        </div>
+        <div class="flex justify-between"><span class="text-gray-400">Duración</span><span class="text-white">${reserva.horas} hr${reserva.horas>1?'s':''}</span></div>
+        <div class="flex justify-between"><span class="text-gray-400">Tarifa</span><span class="text-white">S/ ${bici.precioHora}/hr</span></div>
+        ${reserva.accesorios.length ? `<div class="flex justify-between"><span class="text-gray-400">Accesorios</span><span class="text-white">${reserva.accesorios.length}</span></div>` : ''}
+        <div class="flex justify-between"><span class="text-gray-400">Reserva</span><span class="text-primary text-xs">RB-${reserva.id.toUpperCase().slice(-8)}</span></div>
+      `;
+      document.getElementById('p-sub').textContent = UI.formatPrice(reserva.subtotal);
+      document.getElementById('p-acc').textContent = UI.formatPrice(reserva.accesoriosTotal);
+      document.getElementById('p-total').textContent = UI.formatPrice(reserva.total);
+
+      let selectedMethod = 'tarjeta';
+
+      function renderDetail(method) {
+        const detail = document.getElementById('methodDetail');
+        if (method === 'tarjeta') {
+          detail.innerHTML = `
+            <h3 class="brand-title text-xl text-white mb-4">DATOS DE LA TARJETA</h3>
+            <form id="cardForm" class="space-y-4">
+              <div>
+                <label class="block text-sm text-gray-300 mb-1">Número de tarjeta</label>
+                <input type="text" required maxlength="19" id="cardNum" class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-colors" placeholder="1234 5678 9012 3456"/>
+              </div>
+              <div>
+                <label class="block text-sm text-gray-300 mb-1">Titular</label>
+                <input type="text" required class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-colors" placeholder="Como aparece en la tarjeta"/>
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-sm text-gray-300 mb-1">Vencimiento</label>
+                  <input type="text" required maxlength="5" id="cardExp" class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-colors" placeholder="MM/YY"/>
+                </div>
+                <div>
+                  <label class="block text-sm text-gray-300 mb-1">CVV</label>
+                  <input type="text" required maxlength="4" id="cardCvv" class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-colors" placeholder="123"/>
+                </div>
+              </div>
+              <label class="flex items-center gap-2 text-sm text-gray-300 pt-2">
+                <input type="checkbox" required class="rounded bg-background-card border-gray-700 text-primary focus:ring-primary"/>
+                <span>Autorizo el cargo de ${UI.formatPrice(reserva.total)} a mi tarjeta</span>
+              </label>
+            </form>
+          `;
+          const num = document.getElementById('cardNum');
+          num.addEventListener('input', (e) => { e.target.value = e.target.value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ').trim(); });
+          const exp = document.getElementById('cardExp');
+          exp.addEventListener('input', (e) => { let v = e.target.value.replace(/\D/g, ''); if (v.length >= 2) v = v.slice(0,2) + '/' + v.slice(2,4); e.target.value = v; });
+        } else if (method === 'yape' || method === 'plin') {
+          const name = method === 'yape' ? 'Yape' : 'Plin';
+          detail.innerHTML = `
+            <h3 class="brand-title text-xl text-white mb-4">PAGAR CON ${name.toUpperCase()}</h3>
+            <div class="text-center">
+              <div class="inline-block bg-white p-4 rounded-xl mb-4">
+                <div class="h-40 w-40 qr-pattern"></div>
+              </div>
+              <p class="text-white font-bold brand-title text-2xl mb-1">${method === 'yape' ? '+51 999 555 222' : '+51 999 555 333'}</p>
+              <p class="text-xs text-gray-400 uppercase tracking-wider mb-4">A nombre de Ride Bike SAC</p>
+              <div>
+                <label class="block text-sm text-gray-300 mb-1 text-left">Número de operación</label>
+                <input type="text" required id="opNum" class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary outline-none transition-colors" placeholder="Ej: 123456"/>
+              </div>
+            </div>
+          `;
+        } else if (method === 'efectivo') {
+          detail.innerHTML = `
+            <h3 class="brand-title text-xl text-white mb-4">PAGO EN EFECTIVO</h3>
+            <div class="space-y-4">
+              <p class="text-gray-300">Pagarás al momento de retirar en nuestro local.</p>
+              <div class="bg-background-card border border-primary/30 rounded-lg p-4">
+                <p class="text-sm text-primary font-semibold mb-2 uppercase tracking-wider">Importante</p>
+                <ul class="text-sm text-gray-300 space-y-1">
+                  <li>• Presenta tu código de reserva al llegar</li>
+                  <li>• Aceptamos efectivo y Yape en local</li>
+                  <li>• Se requiere depósito de S/ 100 (reembolsable)</li>
+                </ul>
+              </div>
+              <label class="flex items-center gap-2 text-sm text-gray-300">
+                <input type="checkbox" required class="rounded bg-background-card border-gray-700 text-primary focus:ring-primary"/>
+                <span>Confirmo que pagaré al retirar la bici</span>
+              </label>
+            </div>
+          `;
+        }
+      }
+
+      document.querySelectorAll('.payment-method-card').forEach(c => {
+        c.addEventListener('click', () => {
+          document.querySelectorAll('.payment-method-card').forEach(x => {
+            x.classList.remove('border-primary', 'selected');
+            x.classList.add('border-gray-700');
+          });
+          c.classList.add('border-primary', 'selected');
+          c.classList.remove('border-gray-700');
+          selectedMethod = c.dataset.method;
+          renderDetail(selectedMethod);
+        });
+      });
+      document.querySelector('[data-method="tarjeta"]').classList.add('border-primary', 'selected');
+      document.querySelector('[data-method="tarjeta"]').classList.remove('border-gray-700');
+      renderDetail('tarjeta');
+
+      document.getElementById('btnConfirmarPago').addEventListener('click', () => {
+        Reservas.pay(reserva.id, selectedMethod);
+        Storage.set(STORAGE_KEYS.RESERVA_ACTUAL, reserva.id);
+        UI.toast('Pago procesado correctamente');
+        setTimeout(() => window.location.href = 'pago-confirmado.html', 800);
+      });
+    }
+  </script>
+</body>
+</html>

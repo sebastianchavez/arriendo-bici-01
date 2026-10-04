@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iniciar sesión · Ride Bike</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#16a34a', 'primary-light': '#22c55e', 'background-dark': '#0a0a0a', 'background-card': '#141414' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="" class="bg-background-dark text-gray-200 font-sans">
+  <div class="min-h-screen flex flex-col">
+    <main class="flex-1 flex">
+      <div class="hidden lg:flex lg:w-1/2 relative bg-cover bg-center" style="background-image: linear-gradient(rgba(10,10,10,0.5), rgba(10,10,10,0.7)), url('https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1200&q=80');">
+        <div class="absolute inset-0 flex flex-col justify-between p-12 text-white">
+          <a href="index.html" class="flex items-center gap-3 z-10">
+            <svg class="h-10 w-10 text-primary" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="40" r="12" stroke="currentColor" stroke-width="3"/><circle cx="48" cy="40" r="12" stroke="currentColor" stroke-width="3"/><path d="M16 40 L26 22 L38 22 L48 40" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 22 L32 14 L40 14" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="18" r="2" fill="currentColor"/><path d="M48 40 L42 28" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+            <div>
+              <h2 class="text-2xl font-bold text-white leading-none brand-title">RIDE BIKE</h2>
+              <p class="text-[10px] uppercase tracking-[0.25em] text-primary/80 mt-1">Arriendo de Bicicletas</p>
+            </div>
+          </a>
+          <div class="z-10">
+            <h1 class="brand-title text-6xl text-white mb-4 text-balance">BIENVENIDO<br/>DE VUELTA</h1>
+            <p class="text-lg text-gray-200 max-w-md">Ingresa a tu cuenta para gestionar tus reservas, ver tu historial y acceder a beneficios exclusivos.</p>
+          </div>
+          <div class="z-10 flex gap-6 text-sm text-gray-300">
+            <div><p class="text-primary font-bold text-3xl brand-title">6</p><p class="text-xs uppercase tracking-wider">Tipos de bici</p></div>
+            <div><p class="text-primary font-bold text-3xl brand-title">3K+</p><p class="text-xs uppercase tracking-wider">Clientes</p></div>
+            <div><p class="text-primary font-bold text-3xl brand-title">4.9</p><p class="text-xs uppercase tracking-wider">Rating</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12">
+        <div class="w-full max-w-md">
+          <a href="index.html" class="lg:hidden flex items-center gap-3 mb-8 justify-center">
+            <svg class="h-10 w-10 text-primary" viewBox="0 0 64 64" fill="none"><circle cx="16" cy="40" r="12" stroke="currentColor" stroke-width="3"/><circle cx="48" cy="40" r="12" stroke="currentColor" stroke-width="3"/><path d="M16 40 L26 22 L38 22 L48 40" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 22 L32 14 L40 14" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="18" r="2" fill="currentColor"/><path d="M48 40 L42 28" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+            <div>
+              <h2 class="text-2xl font-bold text-white leading-none brand-title">RIDE BIKE</h2>
+              <p class="text-[10px] uppercase tracking-[0.25em] text-primary/80 mt-1">Arriendo de Bicicletas</p>
+            </div>
+          </a>
+          <div class="text-center mb-8">
+            <h2 class="brand-title text-4xl md:text-5xl text-white mb-2">INICIAR SESIÓN</h2>
+            <p class="text-gray-400">Ingresa tus credenciales para continuar</p>
+          </div>
+
+          <form id="loginForm" class="space-y-5">
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+              <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
+                  <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                </span>
+                <input type="email" id="email" required class="w-full bg-background-card border border-gray-700 rounded-lg pl-12 pr-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="tu@email.com"/>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">Contraseña</label>
+              <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
+                  <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                </span>
+                <input type="password" id="password" required minlength="6" class="w-full bg-background-card border border-gray-700 rounded-lg pl-12 pr-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="••••••••"/>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-sm">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="rounded bg-background-card border-gray-700 text-primary focus:ring-primary focus:ring-offset-background-dark"/>
+                <span class="text-gray-300">Recordarme</span>
+              </label>
+              <a href="recuperar-password.html" class="text-primary hover:text-primary-light transition-colors">¿Olvidaste tu contraseña?</a>
+            </div>
+
+            <button type="submit" class="btn-primary w-full py-3">
+              Ingresar
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+          </form>
+
+          <div class="my-6 flex items-center gap-4">
+            <div class="flex-1 h-px bg-gray-800"></div>
+            <span class="text-xs text-gray-500 uppercase tracking-wider">o continúa con</span>
+            <div class="flex-1 h-px bg-gray-800"></div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <button type="button" class="flex items-center justify-center gap-2 bg-background-card border border-gray-700 rounded-lg py-3 text-sm text-white hover:border-primary transition-colors">
+              <svg class="h-5 w-5" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/></svg>
+              Google
+            </button>
+            <button type="button" class="flex items-center justify-center gap-2 bg-background-card border border-gray-700 rounded-lg py-3 text-sm text-white hover:border-primary transition-colors">
+              <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+              Apple
+            </button>
+          </div>
+
+          <p class="text-center text-sm text-gray-400 mt-8">
+            ¿No tienes cuenta? <a href="registro.html" class="text-primary font-semibold hover:text-primary-light transition-colors">Regístrate aquí</a>
+          </p>
+
+          <div class="mt-6 p-4 bg-primary/5 border border-primary/20 rounded-lg">
+            <p class="text-xs text-primary font-semibold mb-2 uppercase tracking-wider">Usuarios demo:</p>
+            <p class="text-xs text-gray-400">carlos@test.com / 123456</p>
+            <p class="text-xs text-gray-400">maria@test.com / 123456</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const form = document.getElementById('loginForm');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const res = Auth.login(email, password);
+        if (!res.ok) { UI.toast(res.error, 'error'); return; }
+        UI.toast('¡Bienvenido ' + res.user.nombre.split(' ')[0] + '!');
+        const redirect = Storage.get('rb_redirect') || 'perfil.html';
+        Storage.remove('rb_redirect');
+        setTimeout(() => window.location.href = redirect, 700);
+      });
+
+      if (Auth.isLogged()) window.location.href = 'perfil.html';
+    }
+  </script>
+</body>
+</html>

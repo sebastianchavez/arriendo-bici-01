@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi perfil · Ride Bike</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#16a34a', 'primary-light': '#22c55e', 'background-dark': '#0a0a0a', 'background-card': '#141414' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="perfil" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="max-w-5xl mx-auto">
+      <div class="bg-background-card border border-gray-800 rounded-2xl p-6 md:p-8 mb-8">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+          <img id="userFoto" src="" class="h-24 w-24 rounded-full object-cover border-2 border-primary/40"/>
+          <div class="flex-1">
+            <p class="text-primary section-tag mb-1">Mi cuenta</p>
+            <h1 id="userNombre" class="brand-title text-4xl md:text-5xl text-white">—</h1>
+            <p id="userEmail" class="text-gray-400 text-sm">—</p>
+            <p id="userTel" class="text-gray-400 text-sm">—</p>
+          </div>
+          <button id="btnEditar" class="btn-outline text-sm">Editar perfil</button>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-gray-800">
+          <div class="text-center">
+            <p class="text-3xl font-bold text-primary brand-title" id="statTotal">0</p>
+            <p class="text-xs text-gray-400 uppercase tracking-wider">Reservas</p>
+          </div>
+          <div class="text-center">
+            <p class="text-3xl font-bold text-primary brand-title" id="statProximas">0</p>
+            <p class="text-xs text-gray-400 uppercase tracking-wider">Próximas</p>
+          </div>
+          <div class="text-center">
+            <p class="text-3xl font-bold text-primary brand-title" id="statCompletadas">0</p>
+            <p class="text-xs text-gray-400 uppercase tracking-wider">Completadas</p>
+          </div>
+          <div class="text-center">
+            <p class="text-3xl font-bold text-primary brand-title" id="statHoras">0</p>
+            <p class="text-xs text-gray-400 uppercase tracking-wider">Horas rodadas</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-2 mb-6 border-b border-gray-800" id="tabs">
+        <button data-tab="proximas" class="tab-btn active px-5 py-3 text-sm font-medium uppercase tracking-wider border-b-2 border-transparent text-gray-400 hover:text-primary">Próximas</button>
+        <button data-tab="completadas" class="tab-btn px-5 py-3 text-sm font-medium uppercase tracking-wider border-b-2 border-transparent text-gray-400 hover:text-primary">Completadas</button>
+        <button data-tab="anuladas" class="tab-btn px-5 py-3 text-sm font-medium uppercase tracking-wider border-b-2 border-transparent text-gray-400 hover:text-primary">Anuladas</button>
+        <button data-tab="todas" class="tab-btn px-5 py-3 text-sm font-medium uppercase tracking-wider border-b-2 border-transparent text-gray-400 hover:text-primary">Todas</button>
+      </div>
+
+      <div id="reservasList"></div>
+    </div>
+  </main>
+
+  <div id="modalEdit"></div>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      if (!UI.requireAuth('perfil.html')) return;
+
+      const user = Auth.current();
+      document.getElementById('userFoto').src = user.foto;
+      document.getElementById('userNombre').textContent = user.nombre;
+      document.getElementById('userEmail').textContent = user.email;
+      document.getElementById('userTel').textContent = user.telefono;
+
+      let currentTab = 'proximas';
+
+      function getReservas() {
+        const list = Reservas.listByUser(user.id);
+        const today = new Date(); today.setHours(0,0,0,0);
+        return list.sort((a,b) => b.createdAt - a.createdAt);
+      }
+
+      function renderStats() {
+        const list = getReservas();
+        const today = new Date(); today.setHours(0,0,0,0);
+        const proximas = list.filter(r => !['anulada','completada'].includes(r.estado) && new Date(r.fecha + 'T00:00:00') >= today);
+        const completadas = list.filter(r => r.estado === 'completada');
+        const horas = list.filter(r => r.estado === 'completada').reduce((s,r) => s + (r.horas||0), 0);
+        document.getElementById('statTotal').textContent = list.length;
+        document.getElementById('statProximas').textContent = proximas.length;
+        document.getElementById('statCompletadas').textContent = completadas.length;
+        document.getElementById('statHoras').textContent = horas;
+      }
+
+      function renderReservas() {
+        const today = new Date(); today.setHours(0,0,0,0);
+        let list = getReservas();
+        if (currentTab === 'proximas') list = list.filter(r => !['anulada','completada'].includes(r.estado) && new Date(r.fecha + 'T00:00:00') >= today);
+        else if (currentTab === 'completadas') list = list.filter(r => r.estado === 'completada');
+        else if (currentTab === 'anuladas') list = list.filter(r => r.estado === 'anulada');
+
+        const cont = document.getElementById('reservasList');
+        if (!list.length) {
+          cont.innerHTML = `
+            <div class="bg-background-card border border-gray-800 rounded-2xl p-10 text-center">
+              <svg class="h-16 w-16 mx-auto text-gray-700 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+              <p class="text-gray-400 mb-4">No tienes reservas en esta categoría.</p>
+              <a href="reserva.html" class="btn-primary text-sm">Hacer nueva reserva</a>
+            </div>
+          `;
+          return;
+        }
+
+        cont.innerHTML = `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">${list.map(r => {
+          const bici = UI.bicicletaById(r.bicicletaId);
+          const eb = UI.estadoBadge(r.estado);
+          const pb = UI.pagoBadge(r.pago);
+          return `
+            <a href="detalle-reserva.html?id=${r.id}" class="bg-background-card border border-gray-800 rounded-2xl overflow-hidden hover:border-primary transition-all block">
+              <div class="aspect-[3/1] overflow-hidden relative">
+                <img src="${bici.imagen}" class="w-full h-full object-cover" alt=""/>
+                <div class="absolute top-3 right-3 flex gap-1">
+                  <span class="inline-flex items-center px-2 py-1 rounded-full text-[10px] border ${eb.cls}">${eb.label}</span>
+                </div>
+              </div>
+              <div class="p-5">
+                <span class="text-[10px] uppercase tracking-widest text-primary/80">${UI.categoriaLabel(bici.categoria)}</span>
+                <h3 class="brand-title text-2xl text-white mt-1 mb-2">${bici.nombre}</h3>
+                <div class="flex justify-between items-center text-sm text-gray-400 mb-3">
+                  <span>${UI.formatDateShort(r.fecha)} · ${r.hora}</span>
+                  <span>${r.horas} hr${r.horas>1?'s':''}</span>
+                </div>
+                <div class="flex items-center justify-between pt-3 border-t border-gray-800">
+                  <span class="inline-flex items-center px-2 py-1 rounded-full text-[10px] border ${pb.cls}">${pb.label}</span>
+                  <span class="text-primary font-bold brand-title text-xl">${UI.formatPrice(r.total)}</span>
+                </div>
+              </div>
+            </a>
+          `;
+        }).join('')}</div>`;
+      }
+
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
+          b.classList.add('active');
+          currentTab = b.dataset.tab;
+          renderReservas();
+        });
+      });
+
+      document.getElementById('btnEditar').addEventListener('click', () => {
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop';
+        modal.innerHTML = `
+          <div class="modal-content">
+            <h3 class="brand-title text-3xl text-white mb-4">EDITAR PERFIL</h3>
+            <form id="editForm" class="space-y-4">
+              <div>
+                <label class="block text-sm text-gray-300 mb-1">Nombre</label>
+                <input type="text" id="editNombre" required value="${user.nombre}" class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary outline-none"/>
+              </div>
+              <div>
+                <label class="block text-sm text-gray-300 mb-1">Email</label>
+                <input type="email" id="editEmail" required value="${user.email}" class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary outline-none"/>
+              </div>
+              <div>
+                <label class="block text-sm text-gray-300 mb-1">Teléfono</label>
+                <input type="tel" id="editTel" required value="${user.telefono}" class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary outline-none"/>
+              </div>
+              <div class="flex gap-3 mt-6">
+                <button type="button" id="cancelEdit" class="btn-outline flex-1">Cancelar</button>
+                <button type="submit" class="btn-primary flex-1">Guardar</button>
+              </div>
+            </form>
+          </div>
+        `;
+        document.body.appendChild(modal);
+        document.getElementById('cancelEdit').addEventListener('click', () => modal.remove());
+        document.getElementById('editForm').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const upd = {
+            nombre: document.getElementById('editNombre').value.trim(),
+            email: document.getElementById('editEmail').value.trim(),
+            telefono: document.getElementById('editTel').value.trim()
+          };
+          Auth.update(user.id, upd);
+          UI.toast('Perfil actualizado');
+          modal.remove();
+          setTimeout(() => window.location.reload(), 500);
+        });
+      });
+
+      renderStats();
+      renderReservas();
+    }
+  </script>
+</body>
+</html>

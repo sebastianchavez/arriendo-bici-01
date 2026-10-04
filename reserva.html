@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reservar Bici · Ride Bike</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#16a34a', 'primary-light': '#22c55e', 'background-dark': '#0a0a0a', 'background-card': '#141414' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="reserva" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="text-center mb-10">
+      <p class="text-primary section-tag mb-2">Agenda tu rodada</p>
+      <h1 class="text-5xl md:text-6xl font-bold text-white mb-3 brand-title">RESERVAR BICI</h1>
+      <p class="text-gray-400">Sigue los pasos para completar tu reserva</p>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-10">
+      <div class="flex items-center justify-between">
+        <div class="flex flex-col items-center gap-1 flex-1">
+          <div id="dot1" class="step-dot w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-primary/10 text-primary border-2 border-primary">1</div>
+          <span class="text-xs text-gray-400 uppercase tracking-wider">Bici</span>
+        </div>
+        <div id="line1" class="step-line flex-1 mx-2"></div>
+        <div class="flex flex-col items-center gap-1 flex-1">
+          <div id="dot2" class="step-dot w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gray-800 text-gray-500 border-2 border-gray-700">2</div>
+          <span class="text-xs text-gray-500 uppercase tracking-wider">Fecha</span>
+        </div>
+        <div id="line2" class="step-line flex-1 mx-2"></div>
+        <div class="flex flex-col items-center gap-1 flex-1">
+          <div id="dot3" class="step-dot w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gray-800 text-gray-500 border-2 border-gray-700">3</div>
+          <span class="text-xs text-gray-500 uppercase tracking-wider">Extras</span>
+        </div>
+        <div id="line3" class="step-line flex-1 mx-2"></div>
+        <div class="flex flex-col items-center gap-1 flex-1">
+          <div id="dot4" class="step-dot w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gray-800 text-gray-500 border-2 border-gray-700">4</div>
+          <span class="text-xs text-gray-500 uppercase tracking-wider">Confirmar</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <div id="stepPanel" class="bg-background-card border border-gray-800 rounded-2xl p-6 md:p-8"></div>
+      </div>
+      <aside class="lg:col-span-1">
+        <div class="bg-background-card border border-primary/30 rounded-2xl p-6 sticky top-28">
+          <h3 class="brand-title text-2xl text-white mb-4 flex items-center gap-2">
+            <svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+            Resumen
+          </h3>
+          <div class="space-y-3 text-sm" id="resumenBox">
+            <div class="flex justify-between gap-2"><span class="text-gray-400">Bici:</span><span id="r-bici" class="text-white font-medium text-right">—</span></div>
+            <div class="flex justify-between gap-2"><span class="text-gray-400">Fecha:</span><span id="r-fecha" class="text-white font-medium text-right">—</span></div>
+            <div class="flex justify-between gap-2"><span class="text-gray-400">Hora:</span><span id="r-hora" class="text-white font-medium">—</span></div>
+            <div class="flex justify-between gap-2"><span class="text-gray-400">Duración:</span><span id="r-horas" class="text-white font-medium">—</span></div>
+            <div class="flex justify-between gap-2"><span class="text-gray-400">Extras:</span><span id="r-acc" class="text-white font-medium text-right">—</span></div>
+            <div class="border-t border-gray-800 pt-3 mt-3 space-y-1">
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Subtotal:</span><span id="r-sub" class="text-white">S/ 0.00</span></div>
+              <div class="flex justify-between text-sm"><span class="text-gray-400">Extras:</span><span id="r-acc-tot" class="text-white">S/ 0.00</span></div>
+            </div>
+            <div class="border-t border-gray-800 pt-3 mt-3 flex justify-between items-baseline">
+              <span class="text-white font-semibold">Total:</span>
+              <span id="r-total" class="text-primary text-2xl font-bold brand-title">S/ 0.00</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      if (!UI.requireAuth('reserva.html')) return;
+
+      const params = new URLSearchParams(window.location.search);
+      const draft = Reservas.getDraft() || {};
+      const state = {
+        step: 1,
+        bicicletaId: draft.bicicletaId || params.get('servicio') || null,
+        rutaId: draft.rutaId || null,
+        fecha: draft.fecha || null,
+        hora: draft.hora || null,
+        horas: draft.horas || 1,
+        accesorios: draft.accesorios || []
+      };
+
+      function save() { Reservas.setDraft(state); }
+      function calcTotal() { return UI.calcReserva(state.bicicletaId, state.horas, state.accesorios); }
+      function updateResumen() {
+        const bici = state.bicicletaId ? UI.bicicletaById(state.bicicletaId) : null;
+        document.getElementById('r-bici').textContent = bici ? bici.nombre : '—';
+        document.getElementById('r-fecha').textContent = state.fecha ? UI.formatDateShort(state.fecha) : '—';
+        document.getElementById('r-hora').textContent = state.hora || '—';
+        document.getElementById('r-horas').textContent = state.horas ? `${state.horas} hr${state.horas>1?'s':''}` : '—';
+        const accNames = state.accesorios.map(id => UI.accesorioById(id)?.nombre).filter(Boolean);
+        document.getElementById('r-acc').textContent = accNames.length ? accNames.join(', ') : 'Ninguno';
+        const calc = calcTotal();
+        document.getElementById('r-sub').textContent = UI.formatPrice(calc.subtotal);
+        document.getElementById('r-acc-tot').textContent = UI.formatPrice(calc.accesoriosTotal);
+        document.getElementById('r-total').textContent = UI.formatPrice(calc.total);
+      }
+
+      function updateDots() {
+        [1,2,3,4].forEach(i => {
+          const dot = document.getElementById('dot'+i);
+          dot.classList.remove('active', 'completed');
+          if (i < state.step) dot.classList.add('completed');
+          else if (i === state.step) dot.classList.add('active');
+        });
+        ['line1','line2','line3'].forEach((id, idx) => {
+          const line = document.getElementById(id);
+          line.classList.toggle('active', idx + 1 < state.step);
+        });
+      }
+
+      function goToStep(n) {
+        if (n > 1 && !state.bicicletaId) { UI.toast('Selecciona una bici primero', 'error'); return; }
+        if (n > 2 && (!state.fecha || !state.hora || !state.horas)) { UI.toast('Selecciona fecha, hora y duración', 'error'); return; }
+        if (n > 3 && state.accesorios === undefined) { UI.toast('Selecciona los extras', 'error'); return; }
+        state.step = n;
+        save();
+        updateDots();
+        renderStep();
+      }
+
+      function renderStep() {
+        const panel = document.getElementById('stepPanel');
+        if (state.step === 1) {
+          panel.innerHTML = `
+            <h2 class="brand-title text-3xl text-white mb-1">ELIGE TU BICI</h2>
+            <p class="text-gray-400 text-sm mb-6">Selecciona el tipo de bicicleta que quieres arrendar</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              ${BICICLETAS.map(b => `
+                <button type="button" data-id="${b.id}" class="bici-card text-left bg-background-dark border-2 ${state.bicicletaId === b.id ? 'border-primary selected' : 'border-gray-800'} rounded-xl overflow-hidden hover:border-primary transition-all">
+                  <div class="aspect-[16/10] overflow-hidden">
+                    <img src="${b.imagen}" alt="" class="w-full h-full object-cover"/>
+                  </div>
+                  <div class="p-4">
+                    <div class="flex items-center justify-between mb-1">
+                      <h4 class="text-white font-semibold brand-title text-xl">${b.nombre}</h4>
+                      <span class="text-primary font-bold brand-title text-lg">S/ ${b.precioHora}<span class="text-xs text-gray-400">/h</span></span>
+                    </div>
+                    <p class="text-gray-400 text-xs line-clamp-2">${b.descripcion}</p>
+                  </div>
+                </button>
+              `).join('')}
+            </div>
+            <div class="flex justify-end mt-6 pt-6 border-t border-gray-800">
+              <button id="btnNext1" class="btn-primary">Siguiente →</button>
+            </div>
+          `;
+          panel.querySelectorAll('.bici-card').forEach(c => {
+            c.addEventListener('click', () => {
+              state.bicicletaId = c.dataset.id;
+              save();
+              updateDots();
+              renderStep();
+              setTimeout(() => goToStep(2), 250);
+            });
+          });
+          document.getElementById('btnNext1').addEventListener('click', () => goToStep(2));
+        } else if (state.step === 2) {
+          const today = new Date().toISOString().split('T')[0];
+          panel.innerHTML = `
+            <h2 class="brand-title text-3xl text-white mb-1">FECHA Y HORA</h2>
+            <p class="text-gray-400 text-sm mb-6">Selecciona el día, horario y duración</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="relative" id="datePickerWrap">
+                <label class="block text-sm font-medium text-gray-300 mb-2">Fecha</label>
+                <button type="button" id="fechaBtn" class="w-full bg-background-dark border border-gray-700 rounded-lg px-4 py-3 text-white text-left focus:border-primary outline-none transition-colors flex items-center justify-between">
+                  <span class="flex items-center gap-2">
+                    <svg class="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span id="fechaDisplayText">Selecciona una fecha</span>
+                  </span>
+                  <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <input type="hidden" id="fechaInput" value="${state.fecha || today}"/>
+                <div id="calendarPopover" class="hidden absolute z-50 mt-2 left-0 right-0 sm:right-auto sm:w-96 bg-background-card border border-gray-800 rounded-xl shadow-2xl p-4">
+                  <div class="flex items-center justify-between mb-4">
+                    <button type="button" id="calPrev" class="p-2 hover:bg-gray-800 rounded-lg text-gray-400 hover:text-white transition-colors">
+                      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <div id="calMonthYear" class="text-white font-semibold capitalize brand-title text-lg"></div>
+                    <button type="button" id="calNext" class="p-2 hover:bg-gray-800 rounded-lg text-gray-400 hover:text-white transition-colors">
+                      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                  </div>
+                  <div class="grid grid-cols-7 gap-1 mb-2">
+                    ${['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'].map(d => `<div class="text-center text-xs text-gray-500 font-medium py-1">${d}</div>`).join('')}
+                  </div>
+                  <div id="calDays" class="grid grid-cols-7 gap-1"></div>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Duración (horas)</label>
+                <div class="flex items-center gap-3">
+                  <button type="button" id="horasMinus" class="h-11 w-11 bg-background-dark border border-gray-700 rounded-lg text-white hover:border-primary transition-colors text-xl">−</button>
+                  <input type="number" id="horasInput" min="1" max="12" value="${state.horas}" class="flex-1 bg-background-dark border border-gray-700 rounded-lg px-4 py-3 text-white text-center font-bold brand-title text-2xl focus:border-primary outline-none"/>
+                  <button type="button" id="horasPlus" class="h-11 w-11 bg-background-dark border border-gray-700 rounded-lg text-white hover:border-primary transition-colors text-xl">+</button>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">5h = 10% off · 8h = 20% off · Semana = 35% off</p>
+              </div>
+            </div>
+            <div id="slotsBox" class="mt-6">
+              <label class="block text-sm font-medium text-gray-300 mb-3">Horario de inicio</label>
+              <div id="slotsGrid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2"></div>
+            </div>
+            <div class="mt-6 pt-6 border-t border-gray-800">
+              <label class="block text-sm font-medium text-gray-300 mb-3">Ruta sugerida (opcional)</label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <button type="button" data-ruta="" class="ruta-btn ${!state.rutaId ? 'border-primary bg-primary/10' : 'border-gray-700 bg-background-dark'} border-2 text-white py-2 px-3 rounded-lg text-sm font-medium">Sin ruta</button>
+                ${RUTAS.map(r => `
+                  <button type="button" data-ruta="${r.id}" class="ruta-btn ${state.rutaId === r.id ? 'border-primary bg-primary/10' : 'border-gray-700 bg-background-dark'} border-2 text-white py-2 px-3 rounded-lg text-sm font-medium">${r.nombre}</button>
+                `).join('')}
+              </div>
+            </div>
+            <div class="flex justify-between mt-6 pt-6 border-t border-gray-800">
+              <button id="btnBack2" class="btn-outline">← Atrás</button>
+              <button id="btnNext2" class="btn-primary">Siguiente →</button>
+            </div>
+          `;
+
+          const fechaInput = document.getElementById('fechaInput');
+          const fechaBtn = document.getElementById('fechaBtn');
+          const fechaDisplayText = document.getElementById('fechaDisplayText');
+          const calendarPopover = document.getElementById('calendarPopover');
+          const calPrev = document.getElementById('calPrev');
+          const calNext = document.getElementById('calNext');
+          const calMonthYear = document.getElementById('calMonthYear');
+          const calDays = document.getElementById('calDays');
+          const slotsGrid = document.getElementById('slotsGrid');
+          const horasInput = document.getElementById('horasInput');
+
+          const monthNames = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+          const minDate = new Date(today + 'T00:00:00');
+          minDate.setHours(0,0,0,0);
+
+          function formatDisplay(iso) {
+            if (!iso) return 'Selecciona una fecha';
+            const [y, m, d] = iso.split('-');
+            return `${d}-${m}-${y}`;
+          }
+          function toISO(d) {
+            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+          }
+          function updateDisplay() { fechaDisplayText.textContent = formatDisplay(fechaInput.value); }
+
+          let viewYear, viewMonth;
+          function renderCalendar() {
+            calMonthYear.textContent = `${monthNames[viewMonth]} de ${viewYear}`;
+            calDays.innerHTML = '';
+            const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+            const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+            for (let i = 0; i < firstDay; i++) calDays.appendChild(document.createElement('div'));
+            const selectedISO = fechaInput.value;
+            for (let d = 1; d <= daysInMonth; d++) {
+              const cell = document.createElement('button');
+              cell.type = 'button';
+              const cellDate = new Date(viewYear, viewMonth, d);
+              const cellISO = toISO(cellDate);
+              cell.textContent = d;
+              cell.className = 'h-9 rounded-lg text-sm font-medium transition-colors flex items-center justify-center';
+              if (cellDate < minDate) { cell.disabled = true; cell.classList.add('text-gray-700', 'cursor-not-allowed'); }
+              else if (cellISO === selectedISO) cell.classList.add('bg-primary', 'text-black', 'font-bold');
+              else if (cellISO === today) cell.classList.add('border', 'border-primary', 'text-primary', 'hover:bg-primary/10');
+              else cell.classList.add('text-white', 'hover:bg-gray-800');
+              cell.addEventListener('click', () => {
+                fechaInput.value = cellISO;
+                state.fecha = cellISO;
+                updateDisplay();
+                calendarPopover.classList.add('hidden');
+                renderSlots();
+                save();
+                updateResumen();
+              });
+              calDays.appendChild(cell);
+            }
+          }
+
+          updateDisplay();
+          const initial = fechaInput.value ? new Date(fechaInput.value + 'T00:00:00') : new Date();
+          viewYear = initial.getFullYear();
+          viewMonth = initial.getMonth();
+          renderCalendar();
+
+          fechaBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const willOpen = calendarPopover.classList.contains('hidden');
+            calendarPopover.classList.toggle('hidden');
+            if (willOpen) renderCalendar();
+          });
+          calPrev.addEventListener('click', (e) => { e.stopPropagation(); if (viewMonth === 0) { viewMonth = 11; viewYear--; } else viewMonth--; renderCalendar(); });
+          calNext.addEventListener('click', (e) => { e.stopPropagation(); if (viewMonth === 11) { viewMonth = 0; viewYear++; } else viewMonth++; renderCalendar(); });
+          document.addEventListener('click', (e) => {
+            if (!calendarPopover.contains(e.target) && !fechaBtn.contains(e.target)) calendarPopover.classList.add('hidden');
+          });
+
+          function renderSlots() {
+            state.fecha = fechaInput.value;
+            const slots = UI.generateSlots(state.fecha);
+            if (!slots.length) { slotsGrid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">No hay horarios disponibles.</p>'; return; }
+            slotsGrid.innerHTML = slots.map(s => `
+              <button type="button" data-time="${s}" class="hora-btn border ${state.hora === s ? 'selected' : 'border-gray-700'} bg-background-dark text-white py-2 px-3 rounded-lg text-sm font-medium">${s}</button>
+            `).join('');
+            slotsGrid.querySelectorAll('.hora-btn').forEach(b => {
+              b.addEventListener('click', () => {
+                state.hora = b.dataset.time;
+                save();
+                slotsGrid.querySelectorAll('.hora-btn').forEach(x => { x.classList.remove('selected'); x.classList.add('border-gray-700'); });
+                b.classList.add('selected');
+                b.classList.remove('border-gray-700');
+                updateResumen();
+              });
+            });
+          }
+          renderSlots();
+
+          document.getElementById('horasMinus').addEventListener('click', () => {
+            const v = Math.max(1, parseInt(horasInput.value) - 1);
+            horasInput.value = v; state.horas = v; save(); updateResumen();
+          });
+          document.getElementById('horasPlus').addEventListener('click', () => {
+            const v = Math.min(12, parseInt(horasInput.value) + 1);
+            horasInput.value = v; state.horas = v; save(); updateResumen();
+          });
+          horasInput.addEventListener('input', () => {
+            let v = parseInt(horasInput.value) || 1;
+            v = Math.max(1, Math.min(12, v));
+            horasInput.value = v; state.horas = v; save(); updateResumen();
+          });
+
+          panel.querySelectorAll('.ruta-btn').forEach(b => {
+            b.addEventListener('click', () => {
+              state.rutaId = b.dataset.ruta || null;
+              save();
+              panel.querySelectorAll('.ruta-btn').forEach(x => { x.classList.remove('border-primary', 'bg-primary/10'); x.classList.add('border-gray-700', 'bg-background-dark'); });
+              b.classList.add('border-primary', 'bg-primary/10');
+              b.classList.remove('border-gray-700', 'bg-background-dark');
+            });
+          });
+
+          document.getElementById('btnBack2').addEventListener('click', () => goToStep(1));
+          document.getElementById('btnNext2').addEventListener('click', () => goToStep(3));
+        } else if (state.step === 3) {
+          panel.innerHTML = `
+            <h2 class="brand-title text-3xl text-white mb-1">EXTRAS</h2>
+            <p class="text-gray-400 text-sm mb-6">Selecciona accesorios opcionales (puedes omitir este paso)</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="accGrid">
+              ${ACCESORIOS.map(a => `
+                <button type="button" data-id="${a.id}" class="accesorio-card text-left bg-background-dark border-2 ${state.accesorios.includes(a.id) ? 'border-primary selected' : 'border-gray-800'} rounded-xl p-4 hover:border-primary transition-all">
+                  <div class="flex items-center gap-3">
+                    <div class="h-12 w-12 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center text-primary flex-shrink-0">
+                      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <div class="flex-1">
+                      <h4 class="text-white font-semibold">${a.nombre}</h4>
+                      <p class="text-gray-400 text-xs">${a.descripcion}</p>
+                    </div>
+                    <div class="text-right">
+                      <p class="text-primary font-bold brand-title text-xl">S/ ${a.precio}</p>
+                    </div>
+                  </div>
+                </button>
+              `).join('')}
+            </div>
+            <div class="flex justify-between mt-6 pt-6 border-t border-gray-800">
+              <button id="btnBack3" class="btn-outline">← Atrás</button>
+              <button id="btnNext3" class="btn-primary">Siguiente →</button>
+            </div>
+          `;
+          panel.querySelectorAll('.accesorio-card').forEach(c => {
+            c.addEventListener('click', () => {
+              const id = c.dataset.id;
+              if (state.accesorios.includes(id)) {
+                state.accesorios = state.accesorios.filter(x => x !== id);
+                c.classList.remove('border-primary', 'selected');
+                c.classList.add('border-gray-800');
+              } else {
+                state.accesorios.push(id);
+                c.classList.add('border-primary', 'selected');
+                c.classList.remove('border-gray-800');
+              }
+              save();
+              updateResumen();
+            });
+          });
+          document.getElementById('btnBack3').addEventListener('click', () => goToStep(2));
+          document.getElementById('btnNext3').addEventListener('click', () => goToStep(4));
+        } else if (state.step === 4) {
+          const user = Auth.current();
+          const bici = UI.bicicletaById(state.bicicletaId);
+          const ruta = state.rutaId ? UI.rutaById(state.rutaId) : null;
+          const calc = calcTotal();
+          panel.innerHTML = `
+            <h2 class="brand-title text-3xl text-white mb-1">CONFIRMA TU RESERVA</h2>
+            <p class="text-gray-400 text-sm mb-6">Revisa los detalles antes de pagar</p>
+            <div class="space-y-3">
+              <div class="flex items-center gap-4 p-4 bg-background-dark rounded-xl border border-gray-800">
+                <img src="${bici.imagen}" class="h-16 w-16 rounded-lg object-cover"/>
+                <div class="flex-1">
+                  <p class="text-white font-semibold brand-title text-xl">${bici.nombre}</p>
+                  <p class="text-gray-400 text-sm">${UI.categoriaLabel(bici.categoria)}</p>
+                </div>
+                <div class="text-right">
+                  <p class="text-primary font-bold brand-title text-xl">S/ ${bici.precioHora}<span class="text-xs text-gray-400">/h</span></p>
+                </div>
+              </div>
+              <div class="grid grid-cols-3 gap-3">
+                <div class="p-4 bg-background-dark rounded-xl border border-gray-800">
+                  <p class="text-xs text-gray-400 uppercase tracking-wider">Fecha</p>
+                  <p class="text-white font-semibold mt-1 text-sm">${UI.formatDateShort(state.fecha)}</p>
+                </div>
+                <div class="p-4 bg-background-dark rounded-xl border border-gray-800">
+                  <p class="text-xs text-gray-400 uppercase tracking-wider">Hora</p>
+                  <p class="text-white font-semibold mt-1 text-sm">${state.hora}</p>
+                </div>
+                <div class="p-4 bg-background-dark rounded-xl border border-gray-800">
+                  <p class="text-xs text-gray-400 uppercase tracking-wider">Duración</p>
+                  <p class="text-white font-semibold mt-1 text-sm">${state.horas} hr${state.horas>1?'s':''}</p>
+                </div>
+              </div>
+              ${ruta ? `
+              <div class="flex items-center gap-4 p-4 bg-background-dark rounded-xl border border-primary/30">
+                <img src="${ruta.imagen}" class="h-14 w-14 rounded-lg object-cover"/>
+                <div>
+                  <p class="text-xs text-primary uppercase tracking-wider">Ruta sugerida</p>
+                  <p class="text-white font-semibold">${ruta.nombre}</p>
+                </div>
+              </div>` : ''}
+              ${state.accesorios.length ? `
+              <div class="p-4 bg-background-dark rounded-xl border border-gray-800">
+                <p class="text-xs text-gray-400 uppercase tracking-wider mb-2">Accesorios</p>
+                <div class="flex flex-wrap gap-2">
+                  ${state.accesorios.map(id => `<span class="text-xs bg-primary/10 border border-primary/30 text-primary px-3 py-1 rounded uppercase tracking-wider">${UI.accesorioById(id).nombre} · S/ ${UI.accesorioById(id).precio}</span>`).join('')}
+                </div>
+              </div>` : ''}
+              <div class="p-4 bg-background-dark rounded-xl border border-gray-800">
+                <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Cliente</p>
+                <p class="text-white font-semibold">${user.nombre}</p>
+                <p class="text-gray-400 text-sm">${user.email} · ${user.telefono}</p>
+              </div>
+              <div class="p-5 bg-background-dark rounded-xl border-2 border-primary/40">
+                <div class="flex justify-between text-sm mb-2"><span class="text-gray-400">Subtotal arriendo</span><span class="text-white font-medium">${UI.formatPrice(calc.subtotal)}</span></div>
+                <div class="flex justify-between text-sm mb-2"><span class="text-gray-400">Accesorios</span><span class="text-white font-medium">${UI.formatPrice(calc.accesoriosTotal)}</span></div>
+                <div class="border-t border-gray-700 mt-3 pt-3 flex justify-between items-baseline">
+                  <span class="text-white font-bold uppercase tracking-wider">Total</span>
+                  <span class="text-primary text-3xl font-bold brand-title">${UI.formatPrice(calc.total)}</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-between mt-6 pt-6 border-t border-gray-800">
+              <button id="btnBack4" class="btn-outline">← Atrás</button>
+              <button id="btnPay" class="btn-primary">Continuar al pago →</button>
+            </div>
+          `;
+          document.getElementById('btnBack4').addEventListener('click', () => goToStep(3));
+          document.getElementById('btnPay').addEventListener('click', () => {
+            const user = Auth.current();
+            const nueva = Reservas.create({
+              userId: user.id,
+              bicicletaId: state.bicicletaId,
+              rutaId: state.rutaId,
+              fecha: state.fecha,
+              hora: state.hora,
+              horas: state.horas,
+              accesorios: state.accesorios,
+              subtotal: calc.subtotal,
+              accesoriosTotal: calc.accesoriosTotal,
+              total: calc.total
+            });
+            Storage.set(STORAGE_KEYS.RESERVA_ACTUAL, nueva.id);
+            Reservas.clearDraft();
+            window.location.href = 'pago.html?reserva=' + nueva.id;
+          });
+        }
+        updateResumen();
+      }
+
+      updateDots();
+      if (state.bicicletaId && state.fecha && state.hora && state.horas) state.step = 4;
+      renderStep();
+    }
+  </script>
+</body>
+</html>

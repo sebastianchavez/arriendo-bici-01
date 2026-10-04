@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pago confirmado · Ride Bike</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#16a34a', 'primary-light': '#22c55e', 'background-dark': '#0a0a0a', 'background-card': '#141414' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="pago-confirmado" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="max-w-3xl mx-auto">
+      <div class="bg-background-card border border-primary/30 rounded-2xl p-8 md:p-12 text-center">
+        <div class="checkmark-circle mx-auto mb-6">
+          <div class="background"></div>
+          <div class="checkmark"></div>
+        </div>
+        <p class="text-primary section-tag mb-2">¡Listo!</p>
+        <h1 class="brand-title text-5xl md:text-6xl text-white mb-3">PAGO EXITOSO</h1>
+        <p class="text-gray-300 text-lg mb-8">Tu reserva ha sido confirmada. Te enviamos los detalles a tu email.</p>
+
+        <div class="bg-background-dark border border-primary/30 rounded-xl p-6 mb-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+            <div>
+              <p class="text-xs text-gray-400 uppercase tracking-wider">Código de reserva</p>
+              <p id="codigo" class="text-primary text-xl font-bold brand-title mt-1">RB-—</p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-400 uppercase tracking-wider">Número de operación</p>
+              <p class="text-white text-xl font-bold mt-1" id="opNum">—</p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-400 uppercase tracking-wider">Fecha</p>
+              <p class="text-white font-semibold mt-1" id="fecha">—</p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-400 uppercase tracking-wider">Hora</p>
+              <p class="text-white font-semibold mt-1" id="hora">—</p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-400 uppercase tracking-wider">Bicicleta</p>
+              <p class="text-white font-semibold mt-1" id="bici">—</p>
+            </div>
+            <div>
+              <p class="text-xs text-gray-400 uppercase tracking-wider">Total pagado</p>
+              <p class="text-primary font-bold mt-1 brand-title text-2xl" id="total">S/ 0.00</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-background-dark border border-gray-800 rounded-xl p-5 mb-8 text-left">
+          <h3 class="brand-title text-xl text-white mb-3">¿QUÉ SIGUE?</h3>
+          <ol class="space-y-2 text-sm text-gray-300">
+            <li class="flex gap-3"><span class="text-primary font-bold">•</span><span>Llega 10 minutos antes al local (Av. Larco 345, Miraflores).</span></li>
+            <li class="flex gap-3"><span class="text-primary font-bold">•</span><span>Presenta tu DNI y el código de reserva.</span></li>
+            <li class="flex gap-3"><span class="text-primary font-bold">•</span><span>Deposita el reembolso de S/ 100.</span></li>
+            <li class="flex gap-3"><span class="text-primary font-bold">•</span><span>¡Listo, a rodar! Devuelve la bici al horario pactado.</span></li>
+          </ol>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a href="#" id="btnDetalle" class="btn-primary text-base">Ver detalle de reserva</a>
+          <a href="perfil.html" class="btn-outline text-base">Mi perfil</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      if (!UI.requireAuth('pago-confirmado.html')) return;
+
+      const id = Storage.get(STORAGE_KEYS.RESERVA_ACTUAL);
+      const reserva = id ? Reservas.get(id) : null;
+      if (!reserva) {
+        UI.toast('No hay reserva confirmada', 'error');
+        setTimeout(() => window.location.href = 'index.html', 800);
+        return;
+      }
+
+      const bici = UI.bicicletaById(reserva.bicicletaId);
+      document.getElementById('codigo').textContent = 'RB-' + reserva.id.toUpperCase().slice(-8);
+      document.getElementById('opNum').textContent = 'OP-' + Math.floor(Math.random() * 900000 + 100000);
+      document.getElementById('fecha').textContent = UI.formatDate(reserva.fecha);
+      document.getElementById('hora').textContent = reserva.hora;
+      document.getElementById('bici').textContent = bici.nombre;
+      document.getElementById('total').textContent = UI.formatPrice(reserva.total);
+
+      document.getElementById('btnDetalle').addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = 'detalle-reserva.html?id=' + reserva.id;
+      });
+    }
+  </script>
+</body>
+</html>

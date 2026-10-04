@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Precios · Ride Bike</title>
+  <meta name="description" content="Tarifas por hora, día y semana. Paquetes especiales y accesorios opcionales." />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#16a34a', 'primary-light': '#22c55e', 'background-dark': '#0a0a0a', 'background-card': '#141414' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="precios" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main>
+    <section class="py-20 border-b border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-primary section-tag mb-3">Tarifas</p>
+        <h1 class="text-6xl md:text-7xl font-bold text-white brand-title">PRECIOS</h1>
+        <p class="text-gray-300 text-lg mt-4 max-w-2xl mx-auto">Tarifas transparentes por hora. Descuentos automáticos por días completos.</p>
+      </div>
+    </section>
+
+    <section class="py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="preciosGrid"></div>
+      </div>
+    </section>
+
+    <section class="py-16 bg-background-card/40 border-y border-primary/10">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <p class="text-primary section-tag mb-3">Ahorra más</p>
+          <h2 class="text-5xl md:text-6xl font-bold text-white brand-title">PAQUETES ESPECIALES</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div class="bg-background-card border border-gray-800 rounded-2xl p-8 text-center card-hover">
+            <h3 class="text-3xl font-bold text-white brand-title mb-2">MEDIO DÍA</h3>
+            <p class="text-gray-400 text-sm mb-4">5 horas consecutivas</p>
+            <p class="text-primary text-5xl font-bold brand-title mb-4">10%<span class="text-base text-gray-400"> OFF</span></p>
+            <ul class="text-sm text-gray-400 space-y-2 mb-6 text-left">
+              <li class="flex gap-2"><svg class="h-4 w-4 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Cualquier bici</li>
+              <li class="flex gap-2"><svg class="h-4 w-4 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Casco y candado</li>
+            </ul>
+          </div>
+          <div class="bg-background-card border-2 border-primary rounded-2xl p-8 text-center card-hover relative">
+            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-black text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider">Más vendido</span>
+            <h3 class="text-3xl font-bold text-white brand-title mb-2">DÍA COMPLETO</h3>
+            <p class="text-gray-400 text-sm mb-4">8 horas consecutivas</p>
+            <p class="text-primary text-5xl font-bold brand-title mb-4">20%<span class="text-base text-gray-400"> OFF</span></p>
+            <ul class="text-sm text-gray-400 space-y-2 mb-6 text-left">
+              <li class="flex gap-2"><svg class="h-4 w-4 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Cualquier bici</li>
+              <li class="flex gap-2"><svg class="h-4 w-4 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Luz LED incluida</li>
+              <li class="flex gap-2"><svg class="h-4 w-4 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Agua gratis</li>
+            </ul>
+          </div>
+          <div class="bg-background-card border border-gray-800 rounded-2xl p-8 text-center card-hover">
+            <h3 class="text-3xl font-bold text-white brand-title mb-2">SEMANA</h3>
+            <p class="text-gray-400 text-sm mb-4">7 días seguidos</p>
+            <p class="text-primary text-5xl font-bold brand-title mb-4">35%<span class="text-base text-gray-400"> OFF</span></p>
+            <ul class="text-sm text-gray-400 space-y-2 mb-6 text-left">
+              <li class="flex gap-2"><svg class="h-4 w-4 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Cualquier bici</li>
+              <li class="flex gap-2"><svg class="h-4 w-4 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Cambio ilimitado</li>
+              <li class="flex gap-2"><svg class="h-4 w-4 text-primary flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>Accesorios gratis</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <p class="text-primary section-tag mb-3">Extras</p>
+          <h2 class="text-5xl md:text-6xl font-bold text-white brand-title">ACCESORIOS</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto" id="accGrid"></div>
+      </div>
+    </section>
+
+    <section class="py-12">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-background-card border border-gray-800 rounded-2xl p-8 max-w-3xl mx-auto">
+          <h3 class="text-2xl font-bold text-white brand-title mb-4 text-center">POLÍTICA DE DEPÓSITO</h3>
+          <p class="text-gray-300 text-center leading-relaxed">Al momento de retirar la bici se requiere un depósito reembolsable de <span class="text-primary font-bold">S/ 100</span> en efectivo o tarjeta. Se devuelve íntegra al regresar la bici en el mismo estado.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <a href="reserva.html" class="btn-primary text-lg">Reservar ahora</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const grid = document.getElementById('preciosGrid');
+      const accGrid = document.getElementById('accGrid');
+
+      grid.innerHTML = BICICLETAS.map(b => `
+        <div class="bg-background-card border border-gray-800 rounded-xl overflow-hidden card-hover">
+          <div class="aspect-[4/3] overflow-hidden">
+            <img src="${b.imagen}" class="w-full h-full object-cover" alt="${b.nombre}"/>
+          </div>
+          <div class="p-6">
+            <span class="text-[10px] uppercase tracking-widest text-primary/80">${UI.categoriaLabel(b.categoria)}</span>
+            <h3 class="text-2xl font-bold text-white brand-title mt-1 mb-2">${b.nombre}</h3>
+            <div class="flex items-baseline gap-2 mb-4">
+              <span class="text-primary text-4xl font-bold brand-title">S/ ${b.precioHora}</span>
+              <span class="text-gray-400 text-sm">/ hora</span>
+            </div>
+            <table class="w-full text-sm border-t border-gray-800 pt-4">
+              <tbody class="text-gray-300">
+                <tr class="border-b border-gray-800"><td class="py-2">2 horas</td><td class="text-right font-medium text-white">S/ ${(b.precioHora*2).toFixed(0)}</td></tr>
+                <tr class="border-b border-gray-800"><td class="py-2">Medio día (5h)</td><td class="text-right font-medium text-white">S/ ${(b.precioHora*5*0.9).toFixed(0)}</td></tr>
+                <tr class="border-b border-gray-800"><td class="py-2">Día completo (8h)</td><td class="text-right font-medium text-white">S/ ${(b.precioHora*8*0.8).toFixed(0)}</td></tr>
+                <tr><td class="py-2">Semana</td><td class="text-right font-medium text-primary">S/ ${(b.precioHora*24*7*0.65).toFixed(0)}</td></tr>
+              </tbody>
+            </table>
+            <a href="reserva.html?servicio=${b.id}" class="btn-primary w-full mt-5 text-sm">Reservar</a>
+          </div>
+        </div>
+      `).join('');
+
+      accGrid.innerHTML = ACCESORIOS.map(a => `
+        <div class="bg-background-card border border-gray-800 rounded-xl p-5 flex items-center gap-4">
+          <div class="h-12 w-12 rounded-lg bg-primary/15 border border-primary/30 flex items-center justify-center text-primary flex-shrink-0">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+          </div>
+          <div class="flex-1">
+            <h4 class="text-white font-semibold">${a.nombre}</h4>
+            <p class="text-gray-400 text-xs">${a.descripcion}</p>
+          </div>
+          <p class="text-primary font-bold brand-title text-2xl">S/ ${a.precio}</p>
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

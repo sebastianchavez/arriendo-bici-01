@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crear cuenta · Ride Bike</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#16a34a', 'primary-light': '#22c55e', 'background-dark': '#0a0a0a', 'background-card': '#141414' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="" class="bg-background-dark text-gray-200 font-sans">
+  <div class="min-h-screen flex flex-col">
+    <main class="flex-1 flex">
+      <div class="hidden lg:flex lg:w-1/2 relative bg-cover bg-center" style="background-image: linear-gradient(rgba(10,10,10,0.5), rgba(10,10,10,0.7)), url('https://images.unsplash.com/photo-1606902965551-dce093cda6e7?w=1200&q=80');">
+        <div class="absolute inset-0 flex flex-col justify-between p-12 text-white">
+          <a href="index.html" class="flex items-center gap-3 z-10">
+            <svg class="h-10 w-10 text-primary" viewBox="0 0 64 64" fill="none"><circle cx="16" cy="40" r="12" stroke="currentColor" stroke-width="3"/><circle cx="48" cy="40" r="12" stroke="currentColor" stroke-width="3"/><path d="M16 40 L26 22 L38 22 L48 40" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 22 L32 14 L40 14" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="18" r="2" fill="currentColor"/><path d="M48 40 L42 28" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+            <div>
+              <h2 class="text-2xl font-bold text-white leading-none brand-title">RIDE BIKE</h2>
+              <p class="text-[10px] uppercase tracking-[0.25em] text-primary/80 mt-1">Arriendo de Bicicletas</p>
+            </div>
+          </a>
+          <div class="z-10">
+            <h1 class="brand-title text-6xl text-white mb-4 text-balance">ÚNETE<br/>A LA RUTA</h1>
+            <p class="text-lg text-gray-200 max-w-md">Crea tu cuenta y empieza a rodar. Reserva en menos de 1 minuto, accede a tarifas especiales y acumula beneficios.</p>
+          </div>
+          <div class="z-10 flex gap-6 text-sm text-gray-300">
+            <div><p class="text-primary font-bold text-3xl brand-title">10%</p><p class="text-xs uppercase tracking-wider">Off 1ra reserva</p></div>
+            <div><p class="text-primary font-bold text-3xl brand-title">24/7</p><p class="text-xs uppercase tracking-wider">Reservas online</p></div>
+            <div><p class="text-primary font-bold text-3xl brand-title">+3K</p><p class="text-xs uppercase tracking-wider">Riders activos</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12">
+        <div class="w-full max-w-md">
+          <a href="index.html" class="lg:hidden flex items-center gap-3 mb-8 justify-center">
+            <svg class="h-10 w-10 text-primary" viewBox="0 0 64 64" fill="none"><circle cx="16" cy="40" r="12" stroke="currentColor" stroke-width="3"/><circle cx="48" cy="40" r="12" stroke="currentColor" stroke-width="3"/><path d="M16 40 L26 22 L38 22 L48 40" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 22 L32 14 L40 14" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="18" r="2" fill="currentColor"/><path d="M48 40 L42 28" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+            <div>
+              <h2 class="text-2xl font-bold text-white leading-none brand-title">RIDE BIKE</h2>
+              <p class="text-[10px] uppercase tracking-[0.25em] text-primary/80 mt-1">Arriendo de Bicicletas</p>
+            </div>
+          </a>
+          <div class="text-center mb-8">
+            <h2 class="brand-title text-4xl md:text-5xl text-white mb-2">CREAR CUENTA</h2>
+            <p class="text-gray-400">Empieza tu primera rodada hoy</p>
+          </div>
+
+          <form id="regForm" class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">Nombre completo</label>
+              <input type="text" id="nombre" required class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Juan Pérez"/>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+              <input type="email" id="email" required class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="tu@email.com"/>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">Teléfono</label>
+              <input type="tel" id="telefono" required class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="+51 999 000 000"/>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">Contraseña</label>
+              <input type="password" id="password" required minlength="6" class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Mínimo 6 caracteres"/>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-300 mb-2">Confirmar contraseña</label>
+              <input type="password" id="confirm" required minlength="6" class="w-full bg-background-card border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Repite tu contraseña"/>
+            </div>
+
+            <label class="flex items-start gap-2 text-sm pt-2 cursor-pointer">
+              <input type="checkbox" required class="mt-1 rounded bg-background-card border-gray-700 text-primary focus:ring-primary"/>
+              <span class="text-gray-300">Acepto los <a href="terminos.html" class="text-primary hover:underline">términos y condiciones</a> y la <a href="privacidad.html" class="text-primary hover:underline">política de privacidad</a>.</span>
+            </label>
+
+            <button type="submit" class="btn-primary w-full py-3 mt-2">
+              Crear cuenta
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+          </form>
+
+          <p class="text-center text-sm text-gray-400 mt-8">
+            ¿Ya tienes cuenta? <a href="inicio-sesion.html" class="text-primary font-semibold hover:text-primary-light transition-colors">Ingresa aquí</a>
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      const form = document.getElementById('regForm');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = {
+          nombre: document.getElementById('nombre').value.trim(),
+          email: document.getElementById('email').value.trim(),
+          telefono: document.getElementById('telefono').value.trim(),
+          password: document.getElementById('password').value
+        };
+        const confirm = document.getElementById('confirm').value;
+        if (data.password !== confirm) { UI.toast('Las contraseñas no coinciden', 'error'); return; }
+        const res = Auth.register(data);
+        if (!res.ok) { UI.toast(res.error, 'error'); return; }
+        Auth.login(data.email, data.password);
+        UI.toast('¡Cuenta creada con éxito!');
+        setTimeout(() => window.location.href = 'perfil.html', 700);
+      });
+
+      if (Auth.isLogged()) window.location.href = 'perfil.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirmación · Ride Bike</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: '#16a34a', 'primary-light': '#22c55e', 'background-dark': '#0a0a0a', 'background-card': '#141414' },
+          fontFamily: { display: ['Bebas Neue'], sans: ['Inter'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="confirmacion" class="bg-background-dark text-gray-200 font-sans">
+  <div id="appHeader"></div>
+
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="max-w-3xl mx-auto">
+      <div class="bg-background-card border border-gray-800 rounded-2xl p-8 md:p-12 text-center">
+        <div class="checkmark-circle mx-auto mb-6">
+          <div class="background"></div>
+          <div class="checkmark"></div>
+        </div>
+        <p class="text-primary section-tag mb-2">¡Casi listo!</p>
+        <h1 class="brand-title text-5xl md:text-6xl text-white mb-3">RESERVA CREADA</h1>
+        <p class="text-gray-300 text-lg mb-6">Tu reserva ha sido registrada. Procede con el pago para confirmarla.</p>
+
+        <div class="bg-background-dark border border-primary/30 rounded-xl p-5 mb-8">
+          <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Código de reserva</p>
+          <p id="codigoReserva" class="text-primary text-3xl font-bold brand-title tracking-wider">RB-—</p>
+        </div>
+
+        <div class="text-left space-y-3 mb-8" id="detalleBox"></div>
+
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a href="#" id="btnPagar" class="btn-primary text-base">Ir a pagar</a>
+          <a href="perfil.html" class="btn-outline text-base">Ver mis reservas</a>
+        </div>
+      </div>
+
+      <div class="mt-8 bg-background-card border border-gray-800 rounded-xl p-6">
+        <h3 class="brand-title text-2xl text-white mb-3">PRÓXIMOS PASOS</h3>
+        <ol class="space-y-3 text-sm text-gray-300">
+          <li class="flex gap-3"><span class="flex-shrink-0 h-7 w-7 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold">1</span><span>Realiza el pago para confirmar tu reserva.</span></li>
+          <li class="flex gap-3"><span class="flex-shrink-0 h-7 w-7 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold">2</span><span>Recibirás un email con la confirmación.</span></li>
+          <li class="flex gap-3"><span class="flex-shrink-0 h-7 w-7 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold">3</span><span>Llega a nuestro local 10 min antes de tu horario.</span></li>
+          <li class="flex gap-3"><span class="flex-shrink-0 h-7 w-7 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold">4</span><span>Presenta tu DNI y código de reserva.</span></li>
+        </ol>
+      </div>
+    </div>
+  </main>
+
+  <div id="appFooter"></div>
+  <script src="main.js"></script>
+  <script>
+    function pageInit() {
+      if (!UI.requireAuth('confirmacion.html')) return;
+
+      const id = Storage.get(STORAGE_KEYS.RESERVA_ACTUAL);
+      const reserva = id ? Reservas.get(id) : null;
+      if (!reserva) {
+        UI.toast('No hay reserva activa', 'error');
+        setTimeout(() => window.location.href = 'index.html', 800);
+        return;
+      }
+
+      const bici = UI.bicicletaById(reserva.bicicletaId);
+      const ruta = reserva.rutaId ? UI.rutaById(reserva.rutaId) : null;
+      document.getElementById('codigoReserva').textContent = 'RB-' + reserva.id.toUpperCase().slice(-8);
+
+      document.getElementById('detalleBox').innerHTML = `
+        <div class="flex items-center gap-4 p-4 bg-background-dark rounded-xl border border-gray-800">
+          <img src="${bici.imagen}" class="h-14 w-14 rounded-lg object-cover"/>
+          <div class="flex-1">
+            <p class="text-white font-semibold brand-title text-xl">${bici.nombre}</p>
+            <p class="text-gray-400 text-sm">${UI.categoriaLabel(bici.categoria)}</p>
+          </div>
+          <p class="text-primary font-bold brand-title text-xl">S/ ${reserva.total.toFixed(2)}</p>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div class="p-3 bg-background-dark rounded-xl border border-gray-800 text-center">
+            <p class="text-[10px] text-gray-400 uppercase tracking-wider">Fecha</p>
+            <p class="text-white font-semibold mt-1 text-sm">${UI.formatDateShort(reserva.fecha)}</p>
+          </div>
+          <div class="p-3 bg-background-dark rounded-xl border border-gray-800 text-center">
+            <p class="text-[10px] text-gray-400 uppercase tracking-wider">Hora</p>
+            <p class="text-white font-semibold mt-1 text-sm">${reserva.hora}</p>
+          </div>
+          <div class="p-3 bg-background-dark rounded-xl border border-gray-800 text-center">
+            <p class="text-[10px] text-gray-400 uppercase tracking-wider">Duración</p>
+            <p class="text-white font-semibold mt-1 text-sm">${reserva.horas} hr${reserva.horas>1?'s':''}</p>
+          </div>
+        </div>
+        <div class="p-4 bg-background-dark rounded-xl border border-gray-800 text-center">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs border ${UI.estadoBadge(reserva.estado).cls}">${UI.estadoBadge(reserva.estado).label}</span>
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs border ${UI.pagoBadge(reserva.pago).cls} ml-2">${UI.pagoBadge(reserva.pago).label}</span>
+        </div>
+      `;
+
+      document.getElementById('btnPagar').addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = 'pago.html?reserva=' + reserva.id;
+      });
+    }
+  </script>
+</body>
+</html>
