@@ -7,7 +7,7 @@ Template HTML + CSS + JS nativo (vanilla) + Tailwind CSS para un sistema complet
 - **19 pantallas** totalmente funcionales
 - **Auth simulado** con localStorage (usuarios demo incluidos)
 - **Wizard de reserva** de 4 pasos con calendario y slots por hora
-- **4 métodos de pago** (Tarjeta, Yape, Plin, Efectivo)
+- **4 métodos de pago** (Tarjeta, Transferencia, Depósito, Efectivo)
 - **6 tipos de bicicleta** (urbana, mountain, ruta, eléctrica, infantil, tándem)
 - **6 accesorios opcionales** (casco, candado, luz, mochila, GPS, asiento infantil)
 - **3 rutas turísticas** sugeridas
@@ -29,7 +29,7 @@ arriendo-bici-01/
 ├── contacto.html           Formulario de contacto + Google Maps + datos
 ├── reserva.html            Wizard 4 pasos + calendario + selector de slots
 ├── confirmacion.html       Post-reserva con código RB-XXXX
-├── pago.html               Métodos de pago (tarjeta, Yape, Plin, efectivo)
+├── pago.html               Métodos de pago (tarjeta, Transferencia, Depósito, efectivo)
 ├── pago-confirmado.html    Confirmación de pago exitosa
 ├── detalle-reserva.html    Detalle completo + botón anular con modal
 ├── perfil.html             Mi perfil + estadísticas + historial con tabs

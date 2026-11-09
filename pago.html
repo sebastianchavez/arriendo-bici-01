@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es-CL" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -41,11 +41,11 @@
             </button>
             <button type="button" data-method="yape" class="payment-method-card border-2 border-gray-700 bg-background-dark rounded-xl p-4 text-center hover:border-primary transition-all">
               <div class="h-7 w-7 mx-auto bg-purple-600 rounded-md flex items-center justify-center text-white font-bold text-xs">Y</div>
-              <p class="text-xs text-gray-300 mt-2 uppercase tracking-wider font-medium">Yape</p>
+              <p class="text-xs text-gray-300 mt-2 uppercase tracking-wider font-medium">Transferencia</p>
             </button>
             <button type="button" data-method="plin" class="payment-method-card border-2 border-gray-700 bg-background-dark rounded-xl p-4 text-center hover:border-primary transition-all">
               <div class="h-7 w-7 mx-auto bg-cyan-500 rounded-md flex items-center justify-center text-white font-bold text-xs">P</div>
-              <p class="text-xs text-gray-300 mt-2 uppercase tracking-wider font-medium">Plin</p>
+              <p class="text-xs text-gray-300 mt-2 uppercase tracking-wider font-medium">Depósito</p>
             </button>
             <button type="button" data-method="efectivo" class="payment-method-card border-2 border-gray-700 bg-background-dark rounded-xl p-4 text-center hover:border-primary transition-all">
               <svg class="h-7 w-7 mx-auto text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
@@ -71,11 +71,11 @@
           </h3>
           <div id="resumenPago" class="space-y-3 text-sm"></div>
           <div class="border-t border-gray-800 mt-4 pt-4 space-y-2">
-            <div class="flex justify-between text-sm"><span class="text-gray-400">Subtotal</span><span id="p-sub" class="text-white">S/ 0.00</span></div>
-            <div class="flex justify-between text-sm"><span class="text-gray-400">Extras</span><span id="p-acc" class="text-white">S/ 0.00</span></div>
+            <div class="flex justify-between text-sm"><span class="text-gray-400">Subtotal</span><span id="p-sub" class="text-white">CLP$ 0</span></div>
+            <div class="flex justify-between text-sm"><span class="text-gray-400">Extras</span><span id="p-acc" class="text-white">CLP$ 0</span></div>
             <div class="border-t border-gray-800 pt-2 mt-2 flex justify-between items-baseline">
               <span class="text-white font-bold uppercase tracking-wider">Total</span>
-              <span id="p-total" class="text-primary text-3xl font-bold brand-title">S/ 0.00</span>
+              <span id="p-total" class="text-primary text-3xl font-bold brand-title">CLP$ 0</span>
             </div>
           </div>
         </div>
@@ -109,7 +109,7 @@
           </div>
         </div>
         <div class="flex justify-between"><span class="text-gray-400">Duración</span><span class="text-white">${reserva.horas} hr${reserva.horas>1?'s':''}</span></div>
-        <div class="flex justify-between"><span class="text-gray-400">Tarifa</span><span class="text-white">S/ ${bici.precioHora}/hr</span></div>
+        <div class="flex justify-between"><span class="text-gray-400">Tarifa</span><span class="text-white">CLP$ ${Number(bici.precioHora).toLocaleString('es-CL', { maximumFractionDigits: 0 })}/hr</span></div>
         ${reserva.accesorios.length ? `<div class="flex justify-between"><span class="text-gray-400">Accesorios</span><span class="text-white">${reserva.accesorios.length}</span></div>` : ''}
         <div class="flex justify-between"><span class="text-gray-400">Reserva</span><span class="text-primary text-xs">RB-${reserva.id.toUpperCase().slice(-8)}</span></div>
       `;
@@ -154,14 +154,14 @@
           const exp = document.getElementById('cardExp');
           exp.addEventListener('input', (e) => { let v = e.target.value.replace(/\D/g, ''); if (v.length >= 2) v = v.slice(0,2) + '/' + v.slice(2,4); e.target.value = v; });
         } else if (method === 'yape' || method === 'plin') {
-          const name = method === 'yape' ? 'Yape' : 'Plin';
+          const name = method === 'yape' ? 'Transferencia' : 'Depósito';
           detail.innerHTML = `
             <h3 class="brand-title text-xl text-white mb-4">PAGAR CON ${name.toUpperCase()}</h3>
             <div class="text-center">
               <div class="inline-block bg-white p-4 rounded-xl mb-4">
                 <div class="h-40 w-40 qr-pattern"></div>
               </div>
-              <p class="text-white font-bold brand-title text-2xl mb-1">${method === 'yape' ? '+51 999 555 222' : '+51 999 555 333'}</p>
+              <p class="text-white font-bold brand-title text-2xl mb-1">${method === 'yape' ? '+56 9 9955 5222' : '+56 9 9955 5333'}</p>
               <p class="text-xs text-gray-400 uppercase tracking-wider mb-4">A nombre de Ride Bike SAC</p>
               <div>
                 <label class="block text-sm text-gray-300 mb-1 text-left">Número de operación</label>
@@ -178,8 +178,8 @@
                 <p class="text-sm text-primary font-semibold mb-2 uppercase tracking-wider">Importante</p>
                 <ul class="text-sm text-gray-300 space-y-1">
                   <li>• Presenta tu código de reserva al llegar</li>
-                  <li>• Aceptamos efectivo y Yape en local</li>
-                  <li>• Se requiere depósito de S/ 100 (reembolsable)</li>
+                  <li>• Aceptamos efectivo y Transferencia en local</li>
+                  <li>• Se requiere depósito de CLP$ 25.000 (reembolsable)</li>
                 </ul>
               </div>
               <label class="flex items-center gap-2 text-sm text-gray-300">

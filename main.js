@@ -1,29 +1,29 @@
 const STORAGE_KEYS = {
-  USERS: 'rb_users',
-  SESSION: 'rb_session',
-  RESERVAS: 'rb_reservas',
-  RESERVA_DRAFT: 'rb_reserva_draft',
-  RESERVA_ACTUAL: 'rb_reserva_actual',
-  PAGO_DRAFT: 'rb_pago_draft',
-  THEME: 'rb_theme'
+  USERS: 'rb_users_clp_v1',
+  SESSION: 'rb_session_clp_v1',
+  RESERVAS: 'rb_reservas_clp_v1',
+  RESERVA_DRAFT: 'rb_reserva_draft_clp_v1',
+  RESERVA_ACTUAL: 'rb_reserva_actual_clp_v1',
+  PAGO_DRAFT: 'rb_pago_draft_clp_v1',
+  THEME: 'rb_theme_clp_v1'
 };
 
 const BICICLETAS = [
-  { id: 'urbana', categoria: 'ciudad', nombre: 'Bici Urbana', descripcion: 'Perfecta para recorrer el centro de la ciudad con comodidad y estilo.', precioHora: 8, duracion: 60, imagen: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=800&q=80', incluye: ['Casco', 'Candado'] },
-  { id: 'montana', categoria: 'aventura', nombre: 'Mountain Bike', descripcion: 'Suspensión delantera y neumáticos todo terreno para aventuras off-road.', precioHora: 12, duracion: 60, imagen: 'https://images.unsplash.com/photo-1606902965551-dce093cda6e7?w=800&q=80', incluye: ['Casco', 'Candado', 'Luz'] },
-  { id: 'ruta', categoria: 'deporte', nombre: 'Bici de Ruta', descripcion: 'Cuadro ligero de carbono para los amantes de la velocidad y el ciclismo deportivo.', precioHora: 15, duracion: 60, imagen: 'https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?w=800&q=80', incluye: ['Casco', 'Candado', 'Luz'] },
-  { id: 'electrica', categoria: 'premium', nombre: 'E-Bike', descripcion: 'Bicicleta eléctrica con asistencia al pedaleo para subir cualquier cuestón sin esfuerzo.', precioHora: 20, duracion: 60, imagen: 'https://images.unsplash.com/photo-1559348349-86f1f65817fe?w=800&q=80', incluye: ['Casco', 'Candado', 'Luz', 'Cargador'] },
-  { id: 'infantil', categoria: 'familia', nombre: 'Bici Infantil', descripcion: 'Bicicletas pequeñas y seguras para niños de 5 a 12 años con ruedines incluidos.', precioHora: 5, duracion: 60, imagen: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&q=80', incluye: ['Casco', 'Ruedines'] },
-  { id: 'tandem', categoria: 'familia', nombre: 'Tándem', descripcion: 'Bicicleta para dos personas, ideal para parejas o amigos que quieran pedalear juntos.', precioHora: 25, duracion: 60, imagen: 'https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?w=800&q=80', incluye: ['2 Cascos', 'Candado'] }
+  { id: 'urbana', categoria: 'ciudad', nombre: 'Bici Urbana', descripcion: 'Perfecta para recorrer el centro de la ciudad con comodidad y estilo.', precioHora: 2000, duracion: 60, imagen: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=800&q=80', incluye: ['Casco', 'Candado'] },
+  { id: 'montana', categoria: 'aventura', nombre: 'Mountain Bike', descripcion: 'Suspensión delantera y neumáticos todo terreno para aventuras off-road.', precioHora: 3000, duracion: 60, imagen: 'https://images.unsplash.com/photo-1606902965551-dce093cda6e7?w=800&q=80', incluye: ['Casco', 'Candado', 'Luz'] },
+  { id: 'ruta', categoria: 'deporte', nombre: 'Bici de Ruta', descripcion: 'Cuadro ligero de carbono para los amantes de la velocidad y el ciclismo deportivo.', precioHora: 3750, duracion: 60, imagen: 'https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?w=800&q=80', incluye: ['Casco', 'Candado', 'Luz'] },
+  { id: 'electrica', categoria: 'premium', nombre: 'E-Bike', descripcion: 'Bicicleta eléctrica con asistencia al pedaleo para subir cualquier cuestón sin esfuerzo.', precioHora: 5000, duracion: 60, imagen: 'https://images.unsplash.com/photo-1559348349-86f1f65817fe?w=800&q=80', incluye: ['Casco', 'Candado', 'Luz', 'Cargador'] },
+  { id: 'infantil', categoria: 'familia', nombre: 'Bici Infantil', descripcion: 'Bicicletas pequeñas y seguras para niños de 5 a 12 años con ruedines incluidos.', precioHora: 1250, duracion: 60, imagen: 'https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=800&q=80', incluye: ['Casco', 'Ruedines'] },
+  { id: 'tandem', categoria: 'familia', nombre: 'Tándem', descripcion: 'Bicicleta para dos personas, ideal para parejas o amigos que quieran pedalear juntos.', precioHora: 6250, duracion: 60, imagen: 'https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?w=800&q=80', incluye: ['2 Cascos', 'Candado'] }
 ];
 
 const ACCESORIOS = [
-  { id: 'casco-extra', nombre: 'Casco adicional', descripcion: 'Casco extra para acompañante.', precio: 3, icono: 'shield' },
-  { id: 'candado-extra', nombre: 'Candado extra', descripcion: 'Candado de seguridad adicional.', precio: 2, icono: 'lock' },
-  { id: 'luz-led', nombre: 'Luz LED', descripcion: 'Luz LED recargable para rodar de noche.', precio: 2, icono: 'light' },
-  { id: 'mochila', nombre: 'Mochila hidratación', descripcion: 'Mochila con bolsa de agua 2L.', precio: 4, icono: 'bag' },
-  { id: 'gps', nombre: 'GPS Garmin', descripcion: 'GPS Garmin con mapas cargados.', precio: 8, icono: 'map' },
-  { id: 'asiento-bebec', nombre: 'Asiento infantil', descripcion: 'Asiento para bebé hasta 15kg.', precio: 5, icono: 'baby' }
+  { id: 'casco-extra', nombre: 'Casco adicional', descripcion: 'Casco extra para acompañante.', precio: 750, icono: 'shield' },
+  { id: 'candado-extra', nombre: 'Candado extra', descripcion: 'Candado de seguridad adicional.', precio: 500, icono: 'lock' },
+  { id: 'luz-led', nombre: 'Luz LED', descripcion: 'Luz LED recargable para rodar de noche.', precio: 500, icono: 'light' },
+  { id: 'mochila', nombre: 'Mochila hidratación', descripcion: 'Mochila con bolsa de agua 2L.', precio: 1000, icono: 'bag' },
+  { id: 'gps', nombre: 'GPS Garmin', descripcion: 'GPS Garmin con mapas cargados.', precio: 2000, icono: 'map' },
+  { id: 'asiento-bebec', nombre: 'Asiento infantil', descripcion: 'Asiento para bebé hasta 15kg.', precio: 1250, icono: 'baby' }
 ];
 
 const RUTAS = [
@@ -61,8 +61,8 @@ const Auth = {
     const users = Storage.get(STORAGE_KEYS.USERS, []);
     if (users.length === 0) {
       Storage.set(STORAGE_KEYS.USERS, [
-        { id: 'u1', nombre: 'Carlos Andino', email: 'carlos@test.com', telefono: '+51 999 111 222', password: '123456', foto: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&q=80' },
-        { id: 'u2', nombre: 'María Quispe', email: 'maria@test.com', telefono: '+51 999 333 444', password: '123456', foto: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80' }
+        { id: 'u1', nombre: 'Carlos Andino', email: 'carlos@test.com', telefono: '+56 9 9911 1222', password: '123456', foto: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&q=80' },
+        { id: 'u2', nombre: 'María Quispe', email: 'maria@test.com', telefono: '+56 9 9933 3444', password: '123456', foto: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80' }
       ]);
     }
   },
@@ -104,9 +104,9 @@ const Reservas = {
     const list = Storage.get(STORAGE_KEYS.RESERVAS, null);
     if (list === null) {
       const samples = [
-        { id: 'r1', userId: 'u1', bicicletaId: 'montana', rutaId: 'r1', horas: 4, fecha: this._futureDate(3), hora: '09:00', accesorios: ['casco-extra', 'mochila'], estado: 'confirmada', pago: 'pagado', metodoPago: 'tarjeta', subtotal: 48, accesoriosTotal: 7, total: 55, createdAt: Date.now() - 86400000 * 2 },
-        { id: 'r2', userId: 'u1', bicicletaId: 'electrica', rutaId: null, horas: 2, fecha: this._futureDate(7), hora: '15:00', accesorios: [], estado: 'pendiente', pago: 'pendiente', metodoPago: null, subtotal: 40, accesoriosTotal: 0, total: 40, createdAt: Date.now() - 86400000 },
-        { id: 'r3', userId: 'u1', bicicletaId: 'urbana', rutaId: 'r2', horas: 3, fecha: this._futureDate(-5), hora: '11:00', accesorios: ['candado-extra'], estado: 'completada', pago: 'pagado', metodoPago: 'yape', subtotal: 24, accesoriosTotal: 2, total: 26, createdAt: Date.now() - 86400000 * 10 }
+        { id: 'r1', userId: 'u1', bicicletaId: 'montana', rutaId: 'r1', horas: 4, fecha: this._futureDate(3), hora: '09:00', accesorios: ['casco-extra', 'mochila'], estado: 'confirmada', pago: 'pagado', metodoPago: 'tarjeta', subtotal: 12000, accesoriosTotal: 1750, total: 13750, createdAt: Date.now() - 86400000 * 2 },
+        { id: 'r2', userId: 'u1', bicicletaId: 'electrica', rutaId: null, horas: 2, fecha: this._futureDate(7), hora: '15:00', accesorios: [], estado: 'pendiente', pago: 'pendiente', metodoPago: null, subtotal: 10000, accesoriosTotal: 0, total: 10000, createdAt: Date.now() - 86400000 },
+        { id: 'r3', userId: 'u1', bicicletaId: 'urbana', rutaId: 'r2', horas: 3, fecha: this._futureDate(-5), hora: '11:00', accesorios: ['candado-extra'], estado: 'completada', pago: 'pagado', metodoPago: 'yape', subtotal: 6000, accesoriosTotal: 500, total: 6500, createdAt: Date.now() - 86400000 * 10 }
       ];
       Storage.set(STORAGE_KEYS.RESERVAS, samples);
     }
@@ -153,14 +153,14 @@ const UI = {
   formatDate(iso) {
     if (!iso) return '';
     const d = new Date(iso + 'T00:00:00');
-    return d.toLocaleDateString('es-ES', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+    return d.toLocaleDateString('es-CL', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
   },
   formatDateShort(iso) {
     if (!iso) return '';
     const d = new Date(iso + 'T00:00:00');
-    return d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
+    return d.toLocaleDateString('es-CL', { day: '2-digit', month: 'short', year: 'numeric' });
   },
-  formatPrice(n) { return 'S/ ' + Number(n).toFixed(2); },
+  formatPrice(n) { return 'CLP$ ' + Number(n).toLocaleString('es-CL', { maximumFractionDigits: 0 }); },
   bicicletaById(id) { return BICICLETAS.find(b => b.id === id); },
   accesorioById(id) { return ACCESORIOS.find(a => a.id === id); },
   rutaById(id) { return RUTAS.find(r => r.id === id); },
@@ -346,15 +346,15 @@ function buildFooter() {
           <ul class="space-y-3 text-sm text-gray-400">
             <li class="flex items-start gap-2">
               <svg class="h-4 w-4 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-              Av. Larco 345, Miraflores
+              Av. Larco 345, Providencia
             </li>
             <li class="flex items-start gap-2">
               <svg class="h-4 w-4 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-              +51 999 555 222
+              +56 9 9955 5222
             </li>
             <li class="flex items-start gap-2">
               <svg class="h-4 w-4 text-primary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-              hola@ridebike.pe
+              hola@ridebike.cl
             </li>
           </ul>
           <div class="flex gap-3 mt-5">
@@ -372,7 +372,7 @@ function buildFooter() {
       </div>
       <div class="border-t border-primary/20 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <p class="text-sm text-gray-500">© 2024 Ride Bike. Todos los derechos reservados.</p>
-        <p class="text-xs text-gray-600 uppercase tracking-wider">Lima · Hecho para rodar</p>
+        <p class="text-xs text-gray-600 uppercase tracking-wider">Santiago · Hecho para rodar</p>
       </div>
     </div>
   </footer>`;

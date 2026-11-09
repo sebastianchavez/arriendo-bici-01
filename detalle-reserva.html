@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es-CL" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -139,7 +139,7 @@
                   ${reserva.accesorios.map(ida => { const a = UI.accesorioById(ida); return `
                     <div class="flex items-center justify-between p-3 bg-background-dark rounded-lg">
                       <span class="text-white text-sm">${a.nombre}</span>
-                      <span class="text-primary font-bold brand-title">S/ ${a.precio}</span>
+                      <span class="text-primary font-bold brand-title">CLP$ ${Number(a.precio).toLocaleString('es-CL', { maximumFractionDigits: 0 })}</span>
                     </div>
                   `; }).join('')}
                 </div>

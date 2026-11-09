@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es-CL" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -83,7 +83,7 @@
             <p class="text-white font-semibold brand-title text-xl">${bici.nombre}</p>
             <p class="text-gray-400 text-sm">${UI.categoriaLabel(bici.categoria)}</p>
           </div>
-          <p class="text-primary font-bold brand-title text-xl">S/ ${reserva.total.toFixed(2)}</p>
+          <p class="text-primary font-bold brand-title text-xl">CLP$ ${Number(reserva.total).toLocaleString('es-CL', { maximumFractionDigits: 0 })}</p>
         </div>
         <div class="grid grid-cols-3 gap-3">
           <div class="p-3 bg-background-dark rounded-xl border border-gray-800 text-center">
